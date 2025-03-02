@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Choices</title>
+        <style>
+            .device {
+                margin: auto;
+                width: 640px;
+                height: 960px;
+                overflow: hidden;
+                background-color: powderblue;
+                position: relative;
+            }
+            .tab-bar {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 80px;
+                background-color: navy;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+            .tab {
+                flex: 1;
+                color: yellow;
+                text-align: center;
+                font-size: 14px;
+                padding: 10px 0;
+            }
+            .tab a {
+                text-decoration: none;
+                color: yellow;
+                display: block;
+                padding: 10px 0;
+            }
+            .tab.active {
+                background-color: gray;
+            }
+            .content {
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="device">
+            <div class="content">
+                <h2>Choices</h2>
+                <form id="choicesForm">
+                    <legend>Pick an option:</legend>
+                    <input
+                        type="radio"
+                        id="option1"
+                        name="choice"
+                        value="Option 1"
+                        checked
+                    />
+                    <label for="option1">Option 1</label>
+                    <input
+                        type="radio"
+                        id="option2"
+                        name="choice"
+                        value="Option 2"
+                    />
+                    <label for="option2">Option 2</label>
+
+                    <br /><br />
+                    <label for="dropdown">Select a value:</label>
+                    <select id="dropdown" name="dropdown">
+                        <option value="Value A">Value A</option>
+                        <option value="Value B">Value B</option>
+                        <option value="Value C">Value C</option>
+                    </select>
+                    <br /><br />
+                    <button type="button" onclick="displayChoices()">
+                        Submit
+                    </button>
+                </form>
+                <p id="result"></p>
+            </div>
+            <div class="tab-bar">
+                <div class="tab"><a href="text.html">Text</a></div>
+                <div class="tab"><a href="lr.html">LR</a></div>
+                <div class="tab"><a href="colors.html">Colors</a></div>
+                <div class="tab"><a href="profile.html">Profile</a></div>
+                <div class="tab active"><a href="choices.html">Choices</a></div>
+                <div class="tab"><a href="todo.html">ToDo</a></div>
+            </div>
+        </div>
+        <script>
+            function displayChoices() {
+                var radios = document.getElementsByName("choice");
+                var selectedRadio;
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        selectedRadio = radios[i].value;
+                        break;
+                    }
+                }
+                var dropdown = document.getElementById("dropdown");
+                var selectedDropdown = dropdown.value;
+                var resultText =
+                    "You selected: " +
+                    selectedRadio +
+                    " and " +
+                    selectedDropdown;
+                document.getElementById("result").innerText = resultText;
+            }
+        </script>
+    </body>
+</html>
