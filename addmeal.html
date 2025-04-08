@@ -43,7 +43,7 @@
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-80 h-[650px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
         <!-- Header -->
         <div class="flex items-center justify-between px-4 py-3 border-b">
             <button class="text-gray-500 hover:text-gray-700">
@@ -60,19 +60,19 @@
             <!-- Meal Type Selection -->
             <div>
                 <h2 class="text-lg font-semibold text-gray-900 mb-3">Meal Type</h2>
-                <div class="grid grid-cols-3 gap-2">
-                    <button class="bg-green-100 text-green-700 py-2 rounded text-xs hover:bg-green-200">Breakfast</button>
-                    <button class="bg-gray-100 text-gray-700 py-2 rounded text-xs hover:bg-gray-200">Lunch</button>
-                    <button class="bg-gray-100 text-gray-700 py-2 rounded text-xs hover:bg-gray-200">Dinner</button>
-                    <button class="bg-gray-100 text-gray-700 py-2 rounded text-xs hover:bg-gray-200">Snack</button>
-                    <button class="bg-gray-100 text-gray-700 py-2 rounded text-xs hover:bg-gray-200">Other</button>
+                <div class="grid grid-cols-3 gap-2" id="meal-buttons">
+                  <button class="meal-btn bg-green-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Breakfast</button>
+                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Lunch</button>
+                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Dinner</button>
+                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Snack</button>
+                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Other</button>
                 </div>
-            </div>
+              </div>
 
             <!-- Nutritional Focus -->
             <div>
                 <h2 class="text-lg font-semibold text-gray-900 mb-3">Nutritional Focus</h2>
-                <select class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
+                <select id="focus" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
                     <option>Carbs</option>
                     <option>Protein</option>
                     <option>Fats</option>
@@ -84,7 +84,7 @@
                 <h2 class="text-lg font-semibold text-gray-900 mb-3">Portion Size</h2>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-600">S</span>
-                    <input type="range" min="0" max="100" value="50" class="flex-1" />
+                    <input type="range" id="portion" min="0" max="100" value="50" class="flex-1" />
                     <span class="text-sm text-gray-600">L</span>
                 </div>
             </div>
@@ -92,7 +92,7 @@
             <!-- Meal Name/Description -->
             <div>
                 <h2 class="text-lg font-semibold text-gray-900 mb-3">Describe Your Meal</h2>
-                <input type="text" placeholder="e.g., Chicken salad, Veggie wrap" 
+                <input type="text" id="description" placeholder="e.g., Chicken salad, Veggie wrap" 
                     class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
             </div>
         </div>
@@ -103,11 +103,50 @@
             <button class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400">
                 Cancel
             </button> </a>
-            <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+            <button id="add-meal-btn" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
                 Add Meal
             </button>
         </div>
     </div>
 </body>
+
+<script>
+    let selectedMealType = "";
+  
+    // highlight logic
+    const buttons = document.querySelectorAll(".meal-btn");
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.replace("bg-green-100", "bg-gray-100"));
+        btn.classList.replace("bg-gray-100", "bg-green-100");
+        selectedMealType = btn.innerText;
+      });
+    });
+  
+    document.getElementById("add-meal-btn").addEventListener("click", () => {
+      const focus = document.getElementById("focus").value;
+      const portionValue = document.getElementById("portion").value;
+      const description = document.getElementById("description").value;
+  
+      if (!selectedMealType || !description) {
+        alert("Please select a meal type and enter a description.");
+        return;
+      }
+  
+      const portionLabel = portionValue < 33 ? "S" : portionValue < 66 ? "M" : "L";
+  
+      const meal = {
+        type: selectedMealType,
+        focus: focus,
+        portion: portionLabel,
+        description: description
+      };
+  
+      const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+      meals.push(meal);
+      localStorage.setItem("meals", JSON.stringify(meals));
+      window.location.href = "nutrition.html";
+    });
+  </script>
 
 </html>

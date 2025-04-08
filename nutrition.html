@@ -15,7 +15,7 @@
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-80 h-[650px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
         <!-- Header -->
         <div class="flex items-center justify-between px-4 py-3 border-b">
             <h1 class="text-xl font-bold text-green-700">Harmony+</h1>
@@ -32,18 +32,24 @@
             <h2 class="text-lg font-semibold text-[#333333] mb-4">Meal Log</h2>
 
             <!-- Previously Logged Meals -->
-            <div class="flex flex-col space-y-4 mb-4">
+            <div id="meal-log" class="flex flex-col space-y-4 mb-4">
                 <!-- Logged Meal Card -->
                 <div class="bg-[#FFF8E1] p-3 rounded-lg">
+                    <h3 class="font-semibold text-[#333333]">Breakfast</h3>
+                    <p class="text-sm text-[#777777]">Fiber: 5g • Portion Size: L</p>
+                    <p class="text-xs text-[#777777]">Yogurt, Granola</p>
+                </div>
+                <div class="bg-[#FFF8E1] p-3 rounded-lg">
                     <h3 class="font-semibold text-[#333333]">Lunch</h3>
-                    <p class="text-sm text-[#777777]">Carbs: 50g • Portion Size: M</p>
+                    <p class="text-sm text-[#777777]">Protein: 17g • Portion Size: M</p>
                     <p class="text-xs text-[#777777]">Chicken Salad, Veggie Wrap</p>
                 </div>
                 <div class="bg-[#FFF8E1] p-3 rounded-lg">
                     <h3 class="font-semibold text-[#333333]">Dinner</h3>
-                    <p class="text-sm text-[#777777]">Carbs: 40g • Portion Size: L</p>
-                    <p class="text-xs text-[#777777]">Grilled Salmon, Steamed Veggies</p>
+                    <p class="text-sm text-[#777777]">Carbs: 20g • Portion Size: L</p>
+                    <p class="text-xs text-[#777777]">Pasta, Steamed Veggies</p>
                 </div>
+                
             </div>
 
             <!-- Enter Meal Button -->
@@ -88,5 +94,21 @@
         </div>
     </div>
 </body>
+
+<script>
+    const mealLog = document.getElementById("meal-log");
+    const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+  
+    meals.forEach(meal => {
+      const card = document.createElement("div");
+      card.className = "bg-[#FFF8E1] p-3 rounded-lg";
+      card.innerHTML = `
+        <h3 class="font-semibold text-[#333333]">${meal.type}</h3>
+        <p class="text-sm text-[#777777]">${meal.focus} • Portion Size: ${meal.portion}</p>
+        <p class="text-xs text-[#777777]">${meal.description}</p>
+      `;
+      mealLog.appendChild(card);
+    });
+  </script>
 
 </html>
