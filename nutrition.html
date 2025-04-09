@@ -36,10 +36,13 @@
                 <!-- Logged Meal Card -->
                 <div class="bg-[#FFF8E1] p-3 rounded-lg">
                     <h3 class="font-semibold text-[#333333]">Breakfast</h3>
-                    <p class="text-sm text-[#777777]">Fiber: 5g • Portion Size: L</p>
+                    <p class="text-sm text-[#777777]">
+                        Calories: 250 • Portion Size: S
+                      </p>
+                      <p class="text-xs text-[#777777]">  Carbs: 5g • Protein: 9g • Fat: 3g </p>
                     <p class="text-xs text-[#777777]">Yogurt, Granola</p>
                 </div>
-                <div class="bg-[#FFF8E1] p-3 rounded-lg">
+                <!-- <div class="bg-[#FFF8E1] p-3 rounded-lg">
                     <h3 class="font-semibold text-[#333333]">Lunch</h3>
                     <p class="text-sm text-[#777777]">Protein: 17g • Portion Size: M</p>
                     <p class="text-xs text-[#777777]">Chicken Salad, Veggie Wrap</p>
@@ -48,9 +51,15 @@
                     <h3 class="font-semibold text-[#333333]">Dinner</h3>
                     <p class="text-sm text-[#777777]">Carbs: 20g • Portion Size: L</p>
                     <p class="text-xs text-[#777777]">Pasta, Steamed Veggies</p>
-                </div>
-                
+                </div> -->
+
             </div>
+
+            <button 
+            class="text-m text-green-700 underline self-start mt-2"
+            onclick="window.location.href='allmeals.html'">
+            View More and Edit
+            </button>
 
             <!-- Enter Meal Button -->
             <button class="mt-auto bg-[#4C9F70] text-white py-2.5 rounded-lg text-sm font-semibold" onclick="window.location.href='addmeal.html'">
@@ -93,22 +102,32 @@
             </a>
         </div>
     </div>
+
+
+    <script>
+        const mealLog = document.getElementById("meal-log");
+        const allMeals = JSON.parse(localStorage.getItem("meals") || "[]");
+    
+        meals = allMeals.slice(-3).reverse();
+      
+        meals.forEach(meal => {
+          const card = document.createElement("div");
+          card.className = "bg-[#FFF8E1] p-3 rounded-lg";
+          card.innerHTML = `
+            <h3 class="font-semibold text-[#333333]">${meal.type}</h3>
+            <p class="text-sm text-[#777777]">
+            Calories: ${meal.calories || "—"} • Portion Size: ${meal.portion}
+            </p>
+            <p class="text-xs text-[#777777]">
+            Carbs: ${meal.carbs || 0}g • Protein: ${meal.protein || 0}g • Fat: ${meal.fat || 0}g
+            </p>
+            <p class="text-xs text-[#777777]">${meal.description}</p>
+          `;
+          mealLog.appendChild(card);
+        });
+    </script>
+
 </body>
 
-<script>
-    const mealLog = document.getElementById("meal-log");
-    const meals = JSON.parse(localStorage.getItem("meals") || "[]");
-  
-    meals.forEach(meal => {
-      const card = document.createElement("div");
-      card.className = "bg-[#FFF8E1] p-3 rounded-lg";
-      card.innerHTML = `
-        <h3 class="font-semibold text-[#333333]">${meal.type}</h3>
-        <p class="text-sm text-[#777777]">${meal.focus} • Portion Size: ${meal.portion}</p>
-        <p class="text-xs text-[#777777]">${meal.description}</p>
-      `;
-      mealLog.appendChild(card);
-    });
-  </script>
 
 </html>

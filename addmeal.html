@@ -1,152 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log Meal - Harmony+</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
-    <style>
-        body {
-            font-family: "Montserrat", sans-serif;
-        }
-        
-       /* Custom range slider styling */
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 10px;
-            background: #e5e7eb;
-            outline: none;
-            border-radius: 15px;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 30px;
-            height: 30px;
-            background-color: #16a34a;  /* Simple green color */
-            border-radius: 50%;          /* Circular shape */
-            cursor: pointer;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 30px;
-            height: 30px;
-            background-color: #16a34a;  /* Simple green color */
-            border-radius: 50%;          /* Circular shape */
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log Meal - Harmony+</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Montserrat", sans-serif;
+    }
+    .hidden { display: none; }
+    .active-btn { background-color: #4C9F70; color: white; }
+  </style>
 </head>
-
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
-        <!-- Header -->
-        <div class="flex items-center justify-between px-4 py-3 border-b">
-            <button class="text-gray-500 hover:text-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </button>
-            <h1 class="text-xl font-bold text-green-700">Log Meal</h1>
-            <div class="w-6"></div> <!-- Spacer to center the title -->
-        </div>
-
-        <!-- Meal Logging Content -->
-        <div class="p-4 flex-1 flex flex-col space-y-4 overflow-y-auto">
-            <!-- Meal Type Selection -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-3">Meal Type</h2>
-                <div class="grid grid-cols-3 gap-2" id="meal-buttons">
-                  <button class="meal-btn bg-green-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Breakfast</button>
-                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Lunch</button>
-                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Dinner</button>
-                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Snack</button>
-                  <button class="meal-btn bg-gray-100 text-gray-700 py-4 rounded text-xs hover:bg-gray-200">Other</button>
-                </div>
-              </div>
-
-            <!-- Nutritional Focus -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-3">Nutritional Focus</h2>
-                <select id="focus" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
-                    <option>Carbs</option>
-                    <option>Protein</option>
-                    <option>Fats</option>
-                </select>
-            </div>
-
-            <!-- Portion Size -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-3">Portion Size</h2>
-                <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-600">S</span>
-                    <input type="range" id="portion" min="0" max="100" value="50" class="flex-1" />
-                    <span class="text-sm text-gray-600">L</span>
-                </div>
-            </div>
-
-            <!-- Meal Name/Description -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-3">Describe Your Meal</h2>
-                <input type="text" id="description" placeholder="e.g., Chicken salad, Veggie wrap" 
-                    class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex justify-between p-4 border-t">
-            <a href="nutrition.html">
-            <button class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400">
-                Cancel
-            </button> </a>
-            <button id="add-meal-btn" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
-                Add Meal
-            </button>
-        </div>
+  <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 border-b">
+      <button onclick="window.location.href='nutrition.html'" class="text-gray-500 hover:text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </button>
+      <h1 id="form-title" class="text-xl font-bold text-green-700">Log Meal</h1>
+      <div class="w-6"></div>
     </div>
-</body>
 
-<script>
+    <!-- Toggle Mode -->
+    <div class="flex justify-center gap-2 p-3">
+      <button id="simple-btn" class="tracking-mode-btn px-3 py-1 rounded active-btn">Simple</button>
+      <button id="advanced-btn" class="tracking-mode-btn px-3 py-1 rounded">Advanced</button>
+    </div>
+
+    <!-- Content -->
+    <div class="p-4 flex-1 flex flex-col space-y-4 overflow-y-auto">
+      <!-- Meal Type -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Meal Type</h2>
+        <div class="grid grid-cols-3 gap-2" id="meal-buttons">
+          <button class="meal-btn bg-gray-100 text-gray-700 py-3 rounded text-xs hover:bg-gray-200">Breakfast</button>
+          <button class="meal-btn bg-gray-100 text-gray-700 py-3 rounded text-xs hover:bg-gray-200">Lunch</button>
+          <button class="meal-btn bg-gray-100 text-gray-700 py-3 rounded text-xs hover:bg-gray-200">Dinner</button>
+          <button class="meal-btn bg-gray-100 text-gray-700 py-3 rounded text-xs hover:bg-gray-200">Snack</button>
+          <button class="meal-btn bg-gray-100 text-gray-700 py-3 rounded text-xs hover:bg-gray-200">Other</button>
+        </div>
+      </div>
+
+      <!-- Portion Size (Simple Mode Only) -->
+      <div id="portion-section">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Portion Size</h2>
+        <div class="flex justify-between">
+          <button class="portion-btn bg-gray-100 px-4 py-2 rounded">S</button>
+          <button class="portion-btn bg-gray-100 px-4 py-2 rounded">M</button>
+          <button class="portion-btn bg-gray-100 px-4 py-2 rounded">L</button>
+        </div>
+      </div>
+
+      <!-- Advanced Fields -->
+      <div id="advanced-fields" class="hidden space-y-3">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Calories</label>
+          <input id="calories" type="number" class="w-full border px-3 py-2 rounded" />
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Carbs (g)</label>
+            <input id="carbs" type="number" class="w-full border px-2 py-1 rounded text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Protein (g)</label>
+            <input id="protein" type="number" class="w-full border px-2 py-1 rounded text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Fat (g)</label>
+            <input id="fat" type="number" class="w-full border px-2 py-1 rounded text-sm" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Describe Your Meal</h2>
+        <input type="text" id="description" placeholder="e.g., Chicken salad, Veggie wrap"
+          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between p-4 border-t">
+      <a href="nutrition.html">
+        <button class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400">Cancel</button>
+      </a>
+      <button id="add-meal-btn" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Add Meal</button>
+    </div>
+  </div>
+
+  <script>
     let selectedMealType = "";
-  
-    // highlight logic
-    const buttons = document.querySelectorAll(".meal-btn");
-    buttons.forEach((btn) => {
+    let selectedPortion = "M";
+    let isAdvanced = false;
+
+    const mealBtns = document.querySelectorAll(".meal-btn");
+    const portionBtns = document.querySelectorAll(".portion-btn");
+    const simpleBtn = document.getElementById("simple-btn");
+    const advancedBtn = document.getElementById("advanced-btn");
+    const portionSection = document.getElementById("portion-section");
+    const advancedFields = document.getElementById("advanced-fields");
+
+    const descriptionInput = document.getElementById("description");
+    const caloriesInput = document.getElementById("calories");
+    const carbsInput = document.getElementById("carbs");
+    const proteinInput = document.getElementById("protein");
+    const fatInput = document.getElementById("fat");
+    const actionBtn = document.getElementById("add-meal-btn");
+    const formTitle = document.getElementById("form-title");
+
+    // macros lookup (simple mode)
+    const macroTable = {
+      Breakfast: {
+        S: { calories: 200, carbs: 25, protein: 10, fat: 8 },
+        M: { calories: 350, carbs: 40, protein: 15, fat: 12 },
+        L: { calories: 500, carbs: 55, protein: 20, fat: 18 }
+      },
+      Lunch: {
+        S: { calories: 300, carbs: 30, protein: 15, fat: 10 },
+        M: { calories: 500, carbs: 50, protein: 25, fat: 16 },
+        L: { calories: 700, carbs: 65, protein: 35, fat: 22 }
+      },
+      Dinner: {
+        S: { calories: 300, carbs: 30, protein: 15, fat: 12 },
+        M: { calories: 500, carbs: 50, protein: 25, fat: 18 },
+        L: { calories: 750, carbs: 70, protein: 35, fat: 24 }
+      },
+      Snack: {
+        S: { calories: 100, carbs: 15, protein: 3, fat: 4 },
+        M: { calories: 200, carbs: 25, protein: 5, fat: 7 },
+        L: { calories: 300, carbs: 35, protein: 8, fat: 10 }
+      },
+      Other: {
+        S: { calories: 150, carbs: 20, protein: 8, fat: 6 },
+        M: { calories: 300, carbs: 35, protein: 15, fat: 12 },
+        L: { calories: 450, carbs: 50, protein: 20, fat: 18 }
+      }
+    };
+
+    // meal type select
+    mealBtns.forEach(btn => {
       btn.addEventListener("click", () => {
-        buttons.forEach(b => b.classList.replace("bg-green-100", "bg-gray-100"));
+        mealBtns.forEach(b => b.classList.replace("bg-green-100", "bg-gray-100"));
         btn.classList.replace("bg-gray-100", "bg-green-100");
         selectedMealType = btn.innerText;
       });
     });
-  
-    document.getElementById("add-meal-btn").addEventListener("click", () => {
-      const focus = document.getElementById("focus").value;
-      const portionValue = document.getElementById("portion").value;
-      const description = document.getElementById("description").value;
-  
+
+    // portion select
+    portionBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        portionBtns.forEach(b => b.classList.replace("bg-green-100", "bg-gray-100"));
+        btn.classList.replace("bg-gray-100", "bg-green-100");
+        selectedPortion = btn.innerText;
+      });
+    });
+
+    // toggle mode
+    simpleBtn.addEventListener("click", () => {
+      isAdvanced = false;
+      simpleBtn.classList.add("active-btn");
+      advancedBtn.classList.remove("active-btn");
+      portionSection.classList.remove("hidden");
+      advancedFields.classList.add("hidden");
+    });
+
+    advancedBtn.addEventListener("click", () => {
+      isAdvanced = true;
+      simpleBtn.classList.remove("active-btn");
+      advancedBtn.classList.add("active-btn");
+      portionSection.classList.add("hidden");
+      advancedFields.classList.remove("hidden");
+    });
+
+    const editId = localStorage.getItem("editMealId");
+    const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+
+    // preload if editing
+    if (editId) {
+      const mealToEdit = meals.find(m => m.id === parseInt(editId));
+      if (mealToEdit) {
+        selectedMealType = mealToEdit.type;
+        selectedPortion = mealToEdit.portion || "M";
+        descriptionInput.value = mealToEdit.description;
+
+        // advanced check
+        if (mealToEdit.calories) {
+          caloriesInput.value = mealToEdit.calories;
+          carbsInput.value = mealToEdit.carbs;
+          proteinInput.value = mealToEdit.protein;
+          fatInput.value = mealToEdit.fat;
+          advancedBtn.click(); // activate advanced mode
+        } else {
+          simpleBtn.click();
+        }
+
+        mealBtns.forEach(btn => {
+          if (btn.innerText === selectedMealType) {
+            btn.classList.replace("bg-gray-100", "bg-green-100");
+          }
+        });
+
+        portionBtns.forEach(btn => {
+          if (btn.innerText === selectedPortion) {
+            btn.classList.replace("bg-gray-100", "bg-green-100");
+          }
+        });
+
+        formTitle.textContent = "Edit Meal";
+        actionBtn.textContent = "Update Meal";
+      }
+    }
+
+    actionBtn.addEventListener("click", () => {
+      const description = descriptionInput.value.trim();
       if (!selectedMealType || !description) {
         alert("Please select a meal type and enter a description.");
         return;
       }
-  
-      const portionLabel = portionValue < 33 ? "S" : portionValue < 66 ? "M" : "L";
-  
-      const meal = {
+
+      let mealData = {
+        id: editId ? parseInt(editId) : Date.now(),
         type: selectedMealType,
-        focus: focus,
-        portion: portionLabel,
-        description: description
+        portion: selectedPortion,
+        description
       };
-  
-      const meals = JSON.parse(localStorage.getItem("meals") || "[]");
-      meals.push(meal);
+
+      if (isAdvanced) {
+        mealData.calories = parseInt(caloriesInput.value);
+        mealData.carbs = parseInt(carbsInput.value);
+        mealData.protein = parseInt(proteinInput.value);
+        mealData.fat = parseInt(fatInput.value);
+      } else {
+        const estimate = macroTable[selectedMealType]?.[selectedPortion] || {};
+        mealData = { ...mealData, ...estimate };
+      }
+
+      const index = meals.findIndex(m => m.id === mealData.id);
+      if (index !== -1) {
+        meals[index] = mealData;
+        localStorage.removeItem("editMealId");
+      } else {
+        meals.push(mealData);
+      }
+
       localStorage.setItem("meals", JSON.stringify(meals));
       window.location.href = "nutrition.html";
     });
   </script>
-
+</body>
 </html>

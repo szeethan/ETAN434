@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Meals - Harmony+</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Montserrat", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 border-b">
+      <button onclick="window.location.href='nutrition.html'" class="text-gray-500 hover:text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </button>
+      <h1 class="text-xl font-bold text-green-700">All Meals</h1>
+      <div class="w-6"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-4 flex-1 flex flex-col space-y-3 overflow-y-auto" id="meal-log">
+      <!-- dynamically populated -->
+    </div>
+
+    <!-- Back Button -->
+    <div class="p-4 border-t">
+      <button onclick="window.location.href='nutrition.html'" class="w-full bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400">
+        Back to Summary
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const mealLog = document.getElementById("meal-log");
+  
+    function renderMeals() {
+      mealLog.innerHTML = ""; // clear previous
+  
+      const meals = JSON.parse(localStorage.getItem("meals") || "[]").slice().reverse();
+  
+      if (meals.length === 0) {
+        mealLog.innerHTML = "<p class='text-center text-sm text-gray-500'>No meals logged yet.</p>";
+        return;
+      }
+  
+      meals.forEach(meal => {
+        const card = document.createElement("div");
+        card.className = "bg-[#FFF8E1] p-3 rounded-lg flex justify-between items-start";
+  
+        card.innerHTML = `
+          <div>
+            <h3 class="font-semibold text-[#333333]">${meal.type}</h3>
+            <p class="text-sm text-[#777777]">
+            Calories: ${meal.calories || "—"} • Portion Size: ${meal.portion}
+            </p>
+            <p class="text-xs text-[#777777]">
+            Carbs: ${meal.carbs || 0}g • Protein: ${meal.protein || 0}g • Fat: ${meal.fat || 0}g
+            </p>
+            <p class="text-xs text-[#777777]">${meal.description}</p>
+          </div>
+          <div class="flex flex-col space-y-1 ml-2">
+            <button onclick="editMeal(${meal.id})" class="text-gray-400 hover:text-gray-600 text-xl">✏️</button>
+            <button onclick="deleteMeal(${meal.id})" class="text-red-400 hover:text-red-600 text-xl">🗑️</button>
+          </div>
+        `;
+  
+        mealLog.appendChild(card);
+      });
+    }
+  
+    function editMeal(id) {
+      localStorage.setItem("editMealId", id);
+      window.location.href = "addmeal.html";
+    }
+  
+    function deleteMeal(id) {
+      if (!confirm("Are you sure you want to delete this meal?")) return;
+      const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+      const updated = meals.filter(m => m.id !== id);
+      localStorage.setItem("meals", JSON.stringify(updated));
+      renderMeals(); // re-render
+    }
+  
+    renderMeals();
+  </script>
+  
+</body>
+</html>
