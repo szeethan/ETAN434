@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Harmony+ Wellness</title>
+    <script src="assets/chart.umd.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
@@ -56,16 +57,36 @@
             </div>
 
             <button 
-            class="text-m text-green-700 underline self-start mt-2"
+            class="bg-[#4C9F70] text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-green-700 mb-10 self-start"
             onclick="window.location.href='allmeals.html'">
             View More and Edit
-            </button>
+          </button>
+
+            <!-- Chart Section -->
+            <div class="grid grid-cols-2 gap-5 mb-4">
+                <div class="bg-gray-50 p-2 rounded shadow-sm">
+                    <h3 class="text-xs font-medium text-gray-600 mb-1 text-center">Calories (7 Days)</h3>
+                    <div class="bg-gray-50 px-3 py-2 rounded shadow-sm flex items-center justify-center h-[120px]">
+                        <canvas id="calorieChart" class="w-full max-w-[200px] h-[200px]"></canvas>
+                      </div>
+                      
+                </div>
+                <div class="bg-gray-50 p-2 rounded shadow-sm">
+                <h3 class="text-xs font-medium text-gray-600 mb-1 text-center">Macro Split</h3>
+                <div class="bg-gray-50 px-3 py-2 rounded shadow-sm flex items-center justify-center h-[120px]">
+                    <canvas id="macroChart" class="w-full max-w-[150px] h-[200px]"></canvas>
+                  </div>
+                  
+                </div>
+            </div>
 
             <!-- Enter Meal Button -->
             <button class="mt-auto bg-[#4C9F70] text-white py-2.5 rounded-lg text-sm font-semibold" onclick="window.location.href='addmeal.html'">
                 Enter Meal
             </button>
         </div>
+
+        
 
         <!-- Navigation Bar --> 
         <div class="flex justify-between items-center px-4 py-2 border-t">
@@ -107,13 +128,12 @@
     <script>
         const mealLog = document.getElementById("meal-log");
         const allMeals = JSON.parse(localStorage.getItem("meals") || "[]");
-    
-        meals = allMeals.slice(-3).reverse();
-      
+        const meals = allMeals.slice(-3).reverse();
+
         meals.forEach(meal => {
-          const card = document.createElement("div");
-          card.className = "bg-[#FFF8E1] p-3 rounded-lg";
-          card.innerHTML = `
+        const card = document.createElement("div");
+        card.className = "bg-[#FFF8E1] p-3 rounded-lg";
+        card.innerHTML = `
             <h3 class="font-semibold text-[#333333]">${meal.type}</h3>
             <p class="text-sm text-[#777777]">
             Calories: ${meal.calories || "—"} • Portion Size: ${meal.portion}
@@ -122,9 +142,114 @@
             Carbs: ${meal.carbs || 0}g • Protein: ${meal.protein || 0}g • Fat: ${meal.fat || 0}g
             </p>
             <p class="text-xs text-[#777777]">${meal.description}</p>
-          `;
-          mealLog.appendChild(card);
+        `;
+        mealLog.appendChild(card);
         });
+
+        // Helpers
+        function getDayLabel(date) {
+        return date.toLocaleDateString(undefined, { weekday: 'short' });
+        }
+        function groupByDate(meals) {
+        const map = {};
+        meals.forEach(meal => {
+            if (!meal.calories) return;
+            const date = new Date(meal.date || meal.id);
+            const key = date.toISOString().slice(0, 10);
+            if (!map[key]) map[key] = 0;
+            map[key] += meal.calories;
+        });
+        return map;
+        }
+        function getLastNDays(n) {
+        const days = [];
+        const now = new Date();
+        for (let i = n - 1; i >= 0; i--) {
+            const day = new Date();
+            day.setDate(now.getDate() - i);
+            const key = day.toISOString().slice(0, 10);
+            days.push({ key, label: getDayLabel(day) });
+        }
+        return days;
+        }
+
+        // === Charts ===
+        const calMap = groupByDate(allMeals);
+        const last7Days = getLastNDays(7);
+        const calLabels = last7Days.map(d => d.label);
+        const calData = last7Days.map(d => calMap[d.key] || 0);
+
+        let totalCarbs = 0, totalProtein = 0, totalFat = 0;
+        allMeals.forEach(meal => {
+        totalCarbs += meal.carbs || 0;
+        totalProtein += meal.protein || 0;
+        totalFat += meal.fat || 0;
+        });
+
+        new Chart(document.getElementById('calorieChart'), {
+        type: 'line',
+        data: {
+            labels: calLabels,
+            datasets: [{
+            data: calData,
+            borderColor: '#4C9F70',
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+            },
+            scales: {
+            x: {
+                ticks: { font: { size: 8 } },
+                grid: { display: false }
+            },
+            y: {
+                beginAtZero: true,
+                max: Math.max(calData),
+                ticks: {
+                font: { size: 8 },
+                stepSize: 200
+                },
+                grid: { display: false }
+            }
+            }
+        }
+        });
+
+        new Chart(document.getElementById('macroChart'), {
+        type: 'doughnut',
+        data: {
+            labels: [`Carbs(${totalCarbs}g)`, `Protein(${totalProtein}g)`, `Fat(${totalFat}g)`],
+            datasets: [{
+            data: [totalCarbs, totalProtein, totalFat],
+            backgroundColor: ['#60A5FA', '#F87171', '#FBBF24'],
+            borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: false,
+            cutout: '65%',
+            plugins: {
+            legend: {
+                position: 'right',
+                labels: {
+                font: { size: 10 },
+                padding: 6,
+                usePointStyle: true,
+                pointStyle: 'circle'
+                }
+            },
+            tooltip: { enabled: false }
+            }
+        }
+        });
+
     </script>
 
 </body>
