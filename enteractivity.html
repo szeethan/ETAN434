@@ -102,17 +102,19 @@
               name: document.getElementById('activityName').value,
               date: document.getElementById('activityDate').value,
               duration: document.getElementById('duration').value,
-              notes: document.getElementById('notes').value
+              notes: document.getElementById('notes').value,
+              timestamp: new Date().toISOString() // Add timestamp for sorting
           };
           
-          // Store in localStorage
-          localStorage.setItem('latestWorkout', JSON.stringify(workout));
+          const workouts = JSON.parse(localStorage.getItem('workouts') || '[]');
           
-          // Redirect to activity page
+          workouts.push(workout);
+          
+          localStorage.setItem('workouts', JSON.stringify(workouts));
+          
           window.location.href = 'activity.html';
       }
   
-      // Set current date if checkbox is checked
       document.getElementById('useCurrentDate').addEventListener('change', function() {
           if(this.checked) {
               const today = new Date().toISOString().split('T')[0];
