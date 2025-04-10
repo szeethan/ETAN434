@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Library</title>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <link href="./output.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
+
+    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+
+  <h1 class="text-2xl font-bold text-green-700 mb-4">Meal Library</h1>
+
+  <!-- Filters -->
+  <div class="flex gap-2 mb-4">
+    <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-sm" data-filter="all">All</button>
+    <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-sm" data-filter="high-protein">High Protein</button>
+    <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-sm" data-filter="vegetarian">Vegetarian</button>
+  </div>
+
+  <!-- Meal Grid -->
+  <div id="meal-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl"></div>
+
+
+    </div>
+
+  <script>
+    const meals = [
+      {
+        name: "Greek Yogurt Bowl",
+        description: "Greek yogurt with granola and berries",
+        calories: 300,
+        protein: 25,
+        carbs: 20,
+        fat: 8,
+        tags: ["high-protein", "vegetarian"]
+      },
+      {
+        name: "Grilled Chicken Salad",
+        description: "Chicken breast, leafy greens, vinaigrette",
+        calories: 400,
+        protein: 35,
+        carbs: 10,
+        fat: 18,
+        tags: ["high-protein"]
+      },
+      {
+        name: "Quinoa Veggie Bowl",
+        description: "Quinoa, chickpeas, roasted vegetables",
+        calories: 450,
+        protein: 20,
+        carbs: 40,
+        fat: 15,
+        tags: ["vegetarian"]
+      },
+      {
+        name: "Tuna Avocado Wrap",
+        description: "Tuna, avocado, whole wheat wrap",
+        calories: 350,
+        protein: 28,
+        carbs: 22,
+        fat: 12,
+        tags: ["high-protein"]
+      }
+    ];
+
+    const grid = document.getElementById("meal-grid");
+    const buttons = document.querySelectorAll(".filter-btn");
+
+    function renderMeals(filter) {
+      grid.innerHTML = "";
+      meals.filter(m => filter === "all" || m.tags.includes(filter))
+           .forEach(meal => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-4 rounded-lg shadow-sm";
+        card.innerHTML = `
+          <h3 class="text-lg font-semibold text-green-700">${meal.name}</h3>
+          <p class="text-xs text-gray-600 mb-1">${meal.description}</p>
+          <p class="text-xs text-gray-500 mb-1">${meal.calories} kcal • ${meal.protein}g protein • ${meal.carbs}g carbs • ${meal.fat}g fat</p>
+          <button class="mt-2 bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700"
+                  onclick='addToLog(${JSON.stringify(meal)})'>
+            Add to Log
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function addToLog(meal) {
+      const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+      meal.id = Date.now();
+      meals.push(meal);
+      localStorage.setItem("meals", JSON.stringify(meals));
+      window.location.href = "nutrition.html";
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("bg-green-600", "text-white"));
+        btn.classList.add("bg-green-600", "text-white");
+        renderMeals(btn.dataset.filter);
+      });
+    });
+
+    renderMeals("all");
+  </script>
+</body>
+</html>
