@@ -1,94 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>User Setting</title>
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <style>
-        .device {
-            margin: auto;
-            width: 640px;
-            height: 960px;
-            overflow: hidden;
-            background-color: powderblue;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .tab-bar {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 80px;
-            background-color: navy;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .tab {
-            flex: 1;
-            color: yellow;
-            text-align: center;
-            font-size: 14px;
-            padding: 10px 0;
-        }
-        .tab a {
-            text-decoration: none;
-            color: yellow;
-            display: block;
-            padding: 10px 0;
-        }
-        .tab.active {
-            background-color: gray;
-        }
-        h2{
-            padding: 50px;
-        }
+    @font-face {
+      font-family: 'Montserrat';
+      font-weight: 400;
+      src: url('fonts/Montserrat-Regular.woff2') format('woff2');
+    }
+    
+    @font-face {
+      font-family: 'Montserrat';
+      font-weight: 600;
+      src: url('fonts/Montserrat-SemiBold.woff2') format('woff2');
+    }
+    
+    @font-face {
+      font-family: 'Montserrat';
+      font-weight: 700;
+      src: url('fonts/Montserrat-Bold.woff2') format('woff2');
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
     </style>
-</head>
-<body>
-    <div class="device">
-        <h2>User Profile</h2>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md p-6">
+      <h1 class="text-2xl font-bold text-green-700 mb-4">User Settings</h1>
 
-        <div id="pfp-container">
-            <img src="similey.jpg" alt="">
-            <h2>Mr. A User</h2>
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <span class="text-sm font-medium text-gray-700">Metric (kg, cm)</span>
+        <div class="relative w-14 h-8 bg-gray-200 rounded-full cursor-pointer" id="unitToggle">
+          <div class="absolute w-6 h-6 bg-green-700 rounded-full transition-all duration-300 top-1" id="toggleIndicator"></div>
+        </div>
+        <span class="text-sm font-medium text-gray-700">Imperial (lb, in)</span>
+      </div>
+
+      <form id="profileForm" class="space-y-4">
+        <div>
+          <label for="age" class="block text-gray-700 font-medium mb-1">Age</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            class="w-full border border-gray-300 rounded-md p-2"
+            required
+          />
         </div>
 
-        <div class="tab-bar">
-            <div class="tab"><a href="text.html">
-                <img src="IMG_7018.png" alt="Icon" style="display: block; margin: 0 auto; width: 24px; height: 24px; filter: brightness(0) invert(1);">
-                Text
-            </a>
-            </div>
-            <div class="tab"><a href="lr.html">
-                <img src="IMG_8951.png" alt="Icon" style="display: block; margin: 0 auto; width: 24px; height: 24px; filter: brightness(0) invert(1);">
-                LR
-            </a>
-            </div>
-            <div class="tab"><a href="colors.html">
-                <img src="IMG_7797.png" alt="Icon" style="display: block; margin: 0 auto; width: 24px; height: 24px; filter: brightness(0) invert(1);">
-                Colors
-            </a>
-            </div>
-            <div class="tab active"><a href="profile.html">
-                <img src="IMG_7267.png" alt="Icon" style="display: block; margin: 0 auto; width: 24px; height: 24px; filter: brightness(0) invert(1);">
-                Profile
-            </a>
-            </div>
-            <div class="tab"><a href="choices.html">
-                <img src="IMG_7400.png" alt="Icon" style="display: block; margin: 0 auto; width: 24px; height: 24px; filter: brightness(0) invert(1);">
-                Choices
-            </a>
-            </div>
-            <div class="tab"><a href="todo.html">
-                <img src="IMG_0680.png" alt="Icon" style="display: block; margin: 0 auto; width: 24px; height: 24px; filter: brightness(0) invert(1);">
-                ToDo
-            </a>
-            </div>
+        <div>
+          <label for="height" class="block text-gray-700 font-medium mb-1">Height</label>
+          <input
+            type="number"
+            id="height"
+            name="height"
+            class="w-full border border-gray-300 rounded-md p-2"
+            required
+            placeholder="Height (cm)"
+          />
         </div>
+
+        <div>
+          <label for="weight" class="block text-gray-700 font-medium mb-1">Weight</label>
+          <input
+            type="number"
+            id="weight"
+            name="weight"
+            class="w-full border border-gray-300 rounded-md p-2"
+            required
+            placeholder="Weight (kg)"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Gender</label>
+          <div class="flex items-center space-x-4">
+            <label class="flex items-center">
+              <input type="radio" name="gender" value="male" class="mr-2" required />
+              <span>Male</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="gender" value="female" class="mr-2" required />
+              <span>Female</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="gender" value="other" class="mr-2" required />
+              <span>Other</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="goals" class="block text-gray-700 font-medium mb-1">
+            Goals (e.g., BMI target, fitness type)
+          </label>
+          <textarea
+            id="goals"
+            name="goals"
+            rows="3"
+            class="w-full border border-gray-300 rounded-md p-2"
+            placeholder="Example: 'Maintain a BMI of ~22, bench 225.'"
+            required
+          ></textarea>
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-medium mb-1">Fitness Interests</label>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">🏋️ Weight Lifting</span>
+              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">🏃 Running</span>
+              <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">🧘 Yoga</span>
+              <button class="text-gray-500 hover:text-green-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        <div class="py-4">
+          <button
+            type="submit"
+            class="w-full bg-green-700 text-white rounded-md py-2 font-medium hover:bg-green-800"
+          >
+            Save Profile
+          </button>
+        </div>
+      </form>
+
+      <div class="py-4">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">Share Your Progress</h2>
+        <p class="text-gray-600 text-sm mb-2">
+          Share your progress with friends or family and celebrate wins together! 🎉
+        </p>
+        <button
+          id="shareButton"
+          class="w-full bg-blue-600 text-white rounded-md py-2 font-medium hover:bg-blue-700"
+        >
+          Share 🔗
+        </button>
+      </div>
+
+      <div class="mt-4 text-center">
+        <a href="mobile.html" class="text-green-700 hover:underline font-medium">
+          Back to Home
+        </a>
+      </div>
     </div>
-</body>
+
+    <script>
+      let currentUnit = "metric";
+      const unitToggle = document.getElementById("unitToggle");
+      const toggleIndicator = document.getElementById("toggleIndicator");
+      const heightInput = document.getElementById("height");
+      const weightInput = document.getElementById("weight");
+
+      function setUnit(unit) {
+        currentUnit = unit;
+        if (unit === "metric") {
+          toggleIndicator.style.transform = "translateX(14%)";
+          heightInput.placeholder = "Height (cm)";
+          weightInput.placeholder = "Weight (kg)";
+        } else {
+          toggleIndicator.style.transform = "translateX(119%)";
+          heightInput.placeholder = "Height (in)";
+          weightInput.placeholder = "Weight (lb)";
+        }
+      }
+
+      unitToggle.addEventListener("click", function() {
+        setUnit(currentUnit === "metric" ? "imperial" : "metric");
+      });
+
+      setUnit("metric");
+
+        document.getElementById("profileForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const profileData = {
+          units: currentUnit,
+          age: document.getElementById("age").value,
+          height: heightInput.value,
+          weight: weightInput.value,
+          gender: document.querySelector('input[name="gender"]:checked').value,
+          goals: document.getElementById("goals").value,
+        };
+        localStorage.setItem("userProfile", JSON.stringify(profileData));
+        alert("Profile saved successfully!");
+      });
+    </script>
+  </body>
 </html>
