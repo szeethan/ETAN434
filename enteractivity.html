@@ -97,11 +97,29 @@
     </div>
 
     <script>
-        function submitWorkout() {
-          alert('Submitted');
+      function submitWorkout() {
+          const workout = {
+              name: document.getElementById('activityName').value,
+              date: document.getElementById('activityDate').value,
+              duration: document.getElementById('duration').value,
+              notes: document.getElementById('notes').value
+          };
+          
+          // Store in localStorage
+          localStorage.setItem('latestWorkout', JSON.stringify(workout));
+          
+          // Redirect to activity page
           window.location.href = 'activity.html';
-        }
-    </script>
+      }
+  
+      // Set current date if checkbox is checked
+      document.getElementById('useCurrentDate').addEventListener('change', function() {
+          if(this.checked) {
+              const today = new Date().toISOString().split('T')[0];
+              document.getElementById('activityDate').value = today;
+          }
+      });
+  </script>
   </div>
 </body>
 </html>
