@@ -114,40 +114,59 @@
         </div>
     </div>
 
-    <!-- Add this script at the bottom of the body in activity.html -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const latestWorkout = localStorage.getItem('latestWorkout');
-        
-        if(latestWorkout) {
-            const workout = JSON.parse(latestWorkout);
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const workouts = JSON.parse(localStorage.getItem('workouts') || []);
             
-            const workoutCard = document.createElement('div');
-            workoutCard.className = 'min-w-[180px] bg-[#FFF8E1] rounded-lg p-3';
-            workoutCard.innerHTML = `
-                <h3 class="font-semibold text-[#333333]">${workout.name}</h3>
-                <p class="text-sm text-[#777777]">${workout.duration} mins</p>
-                <span class="text-xs bg-[#4C9F70] text-white px-2 py-1 rounded mt-2 inline-block">Completed</span>
-            `;
+            workouts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             
-            const recentSection = document.querySelector('.space-y-2');
-            const recentItem = document.createElement('div');
-            recentItem.className = 'flex justify-between items-center p-2 bg-[#F8F8F8] rounded';
-            recentItem.innerHTML = `
-                <div>
-                    <p class="text-sm font-medium text-[#333333]">${workout.name}</p>
-                    <p class="text-xs text-[#777777]">${workout.duration} mins</p>
-                </div>
-                <span class="text-xs text-[#777777]">Just now</span>
-            `;
+            const horizontalContainer = document.querySelector('.flex.space-x-4');
+            const recentContainer = document.querySelector('.space-y-2');
             
-            document.querySelector('.flex.space-x-4').insertBefore(workoutCard, document.querySelector('.flex.space-x-4').firstChild);
-            recentSection.insertBefore(recentItem, recentSection.firstChild);
+            horizontalContainer.innerHTML = '';
+            recentContainer.innerHTML = '';
             
-            localStorage.removeItem('latestWorkout');
-        }
-    });
-</script>
+            workouts.slice(0, 5).forEach(workout => {
+                const workoutCard = document.createElement('div');
+                workoutCard.className = 'min-w-[180px] bg-[#FFF8E1] rounded-lg p-3';
+                workoutCard.innerHTML = `
+                    <h3 class="font-semibold text-[#333333]">${workout.name}</h3>
+                    <p class="text-sm text-[#777777]">${workout.duration} mins</p>
+                    <span class="text-xs bg-[#4C9F70] text-white px-2 py-1 rounded mt-2 inline-block">Completed</span>
+                `;
+                horizontalContainer.appendChild(workoutCard);
+            });
+            
+            workouts.forEach(workout => {
+                const recentItem = document.createElement('div');
+                recentItem.className = 'flex justify-between items-center p-2 bg-[#F8F8F8] rounded';
+                
+                const workoutDate = new Date(workout.timestamp);
+                const timeDiff = getTimeDifference(workoutDate);
+                
+                recentItem.innerHTML = `
+                    <div>
+                        <p class="text-sm font-medium text-[#333333]">${workout.name}</p>
+                        <p class="text-xs text-[#777777]">${workout.duration} mins</p>
+                    </div>
+                    <span class="text-xs text-[#777777]">${timeDiff}</span>
+                `;
+                recentContainer.appendChild(recentItem);
+            });
+            
+            function getTimeDifference(date) {
+                const now = new Date();
+                const diffInSeconds = Math.floor((now - date) / 1000);
+                
+                if (diffInSeconds < 60) return 'Just now';
+                if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds/60)} mins ago`;
+                if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds/3600)} hours ago`;
+                if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds/86400)} days ago`;
+                return date.toLocaleDateString();
+            }
+        });
+    </script>
 </body>
 
 </html>
