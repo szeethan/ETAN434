@@ -4,37 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Harmony+ Home</title>
-    <link href="./output.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <style>
-    @font-face {
-      font-family: 'Montserrat';
-      font-weight: 400;
-      src: url('fonts/Montserrat-Regular.woff2') format('woff2');
-    }
-    
-    @font-face {
-      font-family: 'Montserrat';
-      font-weight: 600;
-      src: url('fonts/Montserrat-SemiBold.woff2') format('woff2');
-    }
-    
-    @font-face {
-      font-family: 'Montserrat';
-      font-weight: 700;
-      src: url('fonts/Montserrat-Bold.woff2') format('woff2');
-    }
+    <link href="./tailwind/output.css" rel="stylesheet">
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-    }
-    </style>
-    
     <style>
-      body {
-        font-family: "Montserrat", sans-serif;
+      @font-face {
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 400;
+      src: url('./fonts/montserrat-v29-latin-regular.woff2') format('woff2');
       }
+
+      @font-face {
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 600;
+      src: url('./fonts/montserrat-v29-latin-600.woff2') format('woff2');
+      }
+
+      @font-face {
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 700;
+      src: url('./fonts/montserrat-v29-latin-700.woff2') format('woff2');
+      }
+      
+      body {
+        font-family: 'Montserrat', sans-serif;
+      }
+    
       .progress-container {
         position: relative;
       }
@@ -56,7 +53,7 @@
   <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
 
-      <div class="flex items-center justify-between px-8 py-6 border-b">
+      <div class="flex items-center justify-between px-8 py-6 border-b border-gray-300">
         <h1 class="text-xl font-bold text-green-700">Harmony+</h1>
         <a href="profile.html" class="text-gray-700 hover:text-green-700">
           <svg
@@ -123,8 +120,8 @@
         </div>
 
         <div class="flex space-x-2">
-          <a href="activity.html">
           <button class="flex-1 bg-green-700 text-white rounded-md py-2 text-sm font-medium hover:bg-green-800">
+            <a href="activity.html">
             <div class="flex items-center justify-center space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -138,10 +135,10 @@
               </svg>
               <span>Log Activity</span>
             </div>
+            </a>
           </button>
-          </a>
-          <a href="nutrition.html">  
           <button class="flex-1 bg-green-700 text-white rounded-md py-2 text-sm font-medium hover:bg-green-800">
+            <a href="nutrition.html">
             <div class="flex items-center justify-center space-x-3">
               <svg
                 class="h-6 w-6 mb-0.5"
@@ -155,15 +152,15 @@
               </svg>
               <span>Log Meal</span>
             </div>
+            </a>
           </button>
-          </a>
         </div>
 
         <h3 class="text-lg font-semibold text-gray-900 mb-3">Recent Milestones </h3>
         <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex gap-4">
+            <div class="flex gap-6">
               <div class="flex-1 space-y-4">
-                <div class="flex items-start space-x-3">
+                <div class="flex items-start space-x-2">
                   <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -176,7 +173,7 @@
                   </div>
                 </div>
           
-                <div class="flex items-start space-x-3">
+                <div class="flex items-start space-x-2">
                   <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -189,7 +186,7 @@
                   </div>
                 </div>
           
-                 <div class="flex items-start space-x-3">
+                 <div class="flex items-start space-x-2">
                   <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -203,8 +200,8 @@
                 </div>
               </div>
           
-              <div class="flex flex-col items-center justify-center p-4 border-l pl-6">
-                <div class="relative w-20 h-20">
+              <div class="flex flex-col items-center justify-center p-4 border-l border-gray-300 pl-8">
+                <div class="relative w-28 h-28">
                   <svg class="w-full h-full" viewBox="0 0 100 100">
                     <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
                     <circle class="text-green-700" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="75.36" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
@@ -213,12 +210,12 @@
                     <span class="text-lg font-bold text-green-700">70%</span>
                   </div>
                 </div>
-                <p class="text-sm text-gray-600 mt-3 text-center">Monthly Wellness<br>Goals Progress</p>
+                <p class="text-sm text-gray-600 mt-4 text-center">Monthly<br>Goals Progress</p>
               </div>
             </div>
           </div>
 
-      <div class="flex justify-between items-center px-12 py-4 border-t">
+      <div class="flex justify-between items-center px-12 py-5 border-t border-gray-300">
         <button class="flex flex-col items-center text-green-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
