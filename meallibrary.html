@@ -1,38 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meal Library</title>
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <title>Meal Library - Harmony+</title>
   <link href="./output.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'Montserrat', sans-serif; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
 
-    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
-
-  <h1 class="text-2xl font-bold text-green-700 mb-4">Meal Library</h1>
-
-  <!-- Filters -->
-  <div class="flex gap-2 mb-4">
-    <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-sm" data-filter="all">All</button>
-    <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-sm" data-filter="high-protein">High Protein</button>
-    <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-sm" data-filter="vegetarian">Vegetarian</button>
-  </div>
-
-  <!-- Meal Grid -->
-  <div id="meal-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl"></div>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 border-b">
+      <button onclick="window.location.href='nutrition.html'" class="text-gray-500 hover:text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </button>
+      <h1 class="text-xl font-bold text-green-700">Meal Library</h1>
+      <div class="w-6"></div>
+    </div>
 
 
+    <!-- Filter Buttons -->
+    <div class="px-4 py-2 pt-4">
+      <div class="flex gap-2">
+        <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-xs font-medium" data-filter="all">All</button>
+        <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-xs font-medium" data-filter="high-protein">High Protein</button>
+        <button class="filter-btn bg-gray-200 px-3 py-1 rounded text-xs font-medium" data-filter="vegetarian">Vegetarian</button>
+      </div>
+    </div>
+
+    <!-- Meal Cards -->
+    <div id="meal-grid" class="p-4 flex-1 overflow-y-auto flex flex-col gap-3"></div>
+
+    <!-- Footer -->
+    <div class="flex justify-center px-4 py-2 border-t">
+      <button class="bg-green-700 text-white px-4 py-2 rounded-md text-xs font-semibold hover:bg-green-800" onclick="window.location.href='nutrition.html'">
+        Back to Nutrition
+      </button>
     </div>
 
   <script>
     const meals = [
       {
-        name: "Greek Yogurt Bowl",
+        type: "Greek Yogurt Bowl",
         description: "Greek yogurt with granola and berries",
         calories: 300,
         protein: 25,
@@ -41,7 +59,7 @@
         tags: ["high-protein", "vegetarian"]
       },
       {
-        name: "Grilled Chicken Salad",
+        type: "Grilled Chicken Salad",
         description: "Chicken breast, leafy greens, vinaigrette",
         calories: 400,
         protein: 35,
@@ -50,7 +68,7 @@
         tags: ["high-protein"]
       },
       {
-        name: "Quinoa Veggie Bowl",
+        type: "Quinoa Veggie Bowl",
         description: "Quinoa, chickpeas, roasted vegetables",
         calories: 450,
         protein: 20,
@@ -59,7 +77,7 @@
         tags: ["vegetarian"]
       },
       {
-        name: "Tuna Avocado Wrap",
+        type: "Tuna Avocado Wrap",
         description: "Tuna, avocado, whole wheat wrap",
         calories: 350,
         protein: 28,
@@ -75,20 +93,21 @@
     function renderMeals(filter) {
       grid.innerHTML = "";
       meals.filter(m => filter === "all" || m.tags.includes(filter))
-           .forEach(meal => {
-        const card = document.createElement("div");
-        card.className = "bg-white p-4 rounded-lg shadow-sm";
-        card.innerHTML = `
-          <h3 class="text-lg font-semibold text-green-700">${meal.name}</h3>
-          <p class="text-xs text-gray-600 mb-1">${meal.description}</p>
-          <p class="text-xs text-gray-500 mb-1">${meal.calories} kcal • ${meal.protein}g protein • ${meal.carbs}g carbs • ${meal.fat}g fat</p>
-          <button class="mt-2 bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700"
-                  onclick='addToLog(${JSON.stringify(meal)})'>
-            Add to Log
-          </button>
-        `;
-        grid.appendChild(card);
-      });
+        .forEach(meal => {
+          const card = document.createElement("div");
+          card.className = "bg-[#FFF8E1] p-3 rounded-lg w-full flex justify-between items-start";
+          card.innerHTML = `
+            <div class="flex-1">
+              <h3 class="text-sm font-semibold text-[#333333]">${meal.type}</h3>
+              <p class="text-xs text-[#777777]">${meal.description}</p>
+              <p class="text-xs text-[#777777]">${meal.calories} kcal • ${meal.protein}g protein • ${meal.carbs}g carbs • ${meal.fat}g fat</p>
+            </div>
+            <button class="text-green-700 hover:text-green-900 text-s" title="Add to Log" onclick='addToLog(${JSON.stringify(meal)})'>
+              Add to Log (+)
+            </button>
+          `;
+          grid.appendChild(card);
+        });
     }
 
     function addToLog(meal) {
@@ -110,4 +129,5 @@
     renderMeals("all");
   </script>
 </body>
+
 </html>
