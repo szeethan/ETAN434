@@ -42,10 +42,10 @@
             </a>
         </div>
 
-        <div class="p-4 flex-1 flex flex-col space-y-6">
+        <div class="p-4 flex-1 flex flex-col space-y-5">
             <div class="flex flex-row gap-4 w-full">
                 <div class="flex-1 rounded-xl shadow-sm p-4 flex flex-col items-center bg-white">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-3">Quick Relaxation</h2>
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Quick Relaxation</h2>
                     <div class="relative w-32 h-32 mb-4">
                         <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                             <circle cx="18" cy="18" r="16" stroke="#e5e7eb" stroke-width="3" fill="none" />
@@ -117,7 +117,20 @@
 
             <div class="rounded-xl shadow-sm p-4 bg-white">
                 <h2 class="text-lg font-semibold text-gray-900 mb-3">Daily Deals</h2>
-                <ul id="dealsList" class="space-y-3 text-sm"></ul>
+                <ul id="dealsList" class="space-y-3 text-sm">
+                    <li class="flex justify-between items-center bg-green-50 px-3 py-2 rounded">
+                        <span>$11.99 Bi-Weekly Gym Membership</span>
+                        <span class="text-green-700 font-semibold">GOLDSGYM</span>
+                    </li>
+                    <li class="flex justify-between items-center bg-green-50 px-3 py-2 rounded">
+                        <span>BOGO Free Peanut Paradise Smoothie</span>
+                        <span class="text-green-700 font-semibold">FUELUP</span>
+                    </li>
+                    <li class="flex justify-between items-center bg-green-50 px-3 py-2 rounded">
+                        <span>25% off One Hour Spa Massage</span>
+                        <span class="text-green-700 font-semibold">RELAX25</span>
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -269,35 +282,21 @@
         }
 
         const deals = [
-            { id: 1, title: '50% off Yoga Class', code: 'ZEN50' },
-            { id: 2, title: 'Free Smoothie w/ Personal Training', code: 'FUELUP' },
-            { id: 3, title: '25% off Spa Massage', code: 'RELAX25' }
+            { id: 1, title: '$11.99 Bi-Weekly Gym Membership', code: 'GOLDSGYM' },
+            { id: 2, title: 'BOGO Free Peanut Paradise Smoothie', code: 'FUELUP' },
+            { id: 3, title: '25% off One Hour Spa Massage', code: 'RELAX25' }
         ];
-        const redeemedKey = 'redeemedDeals';
-        function loadDeals() {
-            const redeemed = JSON.parse(localStorage.getItem(redeemedKey) || '[]');
-            const list = document.getElementById('dealsList');
-            list.innerHTML = '';
-            deals.forEach(d => {
-                const li = document.createElement('li');
-                li.className = 'flex justify-between items-center bg-green-50 px-3 py-2 rounded';
-                if (redeemed.includes(d.id)) {
-                    li.innerHTML = `<span>${d.title}</span><span class='text-green-700 font-semibold'>${d.code}</span>`;
-                } else {
-                    li.innerHTML = `<span>${d.title}</span><button class='bg-green-700 text-white text-xs px-2 py-1 rounded' onclick='redeemDeal(${d.id})'>Get Offer</button>`;
-                }
-                list.appendChild(li);
-            });
+
+        function copyDealCode(code) {
+            navigator.clipboard?.writeText(code);
+            alert(`Coupon code "${code}" copied to clipboard!`);
         }
-        function redeemDeal(id) {
-            const redeemed = JSON.parse(localStorage.getItem(redeemedKey) || '[]');
-            if (!redeemed.includes(id)) redeemed.push(id);
-            localStorage.setItem(redeemedKey, JSON.stringify(redeemed));
-            loadDeals();
-            const deal = deals.find(d => d.id === id);
-            navigator.clipboard?.writeText(deal.code);
-            alert(`Coupon code "${deal.code}" copied to clipboard!`);
-        }
+
+        document.querySelectorAll('#dealsList li').forEach((li, index) => {
+            li.addEventListener('click', () => copyDealCode(deals[index].code));
+            li.style.cursor = 'pointer';
+            li.title = 'Click to copy code';
+        });
 
         window.onload = () => {
             changeTimerLength();
