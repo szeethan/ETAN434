@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Harmony+ Wellness</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="./tailwind.css" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'Montserrat';
@@ -72,7 +72,7 @@
                     <div>
                         <h2 class="text-lg font-semibold text-gray-900 mb-3">Gratitude Journal</h2>
                         <div class="flex space-x-2 mb-3">
-                            <input id="gratitudeInput" type="text" placeholder="Something you're grateful for..." class="flex-1 border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
+                            <input id="gratitudeInput" type="text" placeholder="I am grateful for..." class="flex-1 border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
                             <button onclick="addGratitude()" class="bg-green-700 text-white px-4 py-2 rounded text-sm">Add</button>
                         </div>
                         <ul id="gratitudeList" class="space-y-2 text-sm"></ul>
@@ -140,6 +140,11 @@
                 <button onclick="closeGratitudeOverlay()" class="text-gray-600 hover:text-red-500 text-sm border px-2 py-1 rounded">Close</button>
             </div>
             <div id="gratitudeOverlayLog" class="p-4 space-y-2 overflow-y-auto flex-1 text-sm bg-white"></div>
+            <div class="p-6 mt-1 border-t border-gray-300">
+                <button onclick="window.location.href='wellness.html'" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300">
+                  Back to Wellness
+                </button>
+            </div>
         </div>
 
         <div id="sleepOverlay" class="absolute inset-0 bg-white z-50 hidden flex flex-col rounded-xl overflow-hidden w-full h-full max-w-[640px] mx-auto">
@@ -148,6 +153,11 @@
                 <button onclick="closeSleepOverlay()" class="text-gray-600 hover:text-red-500 text-sm border px-2 py-1 rounded">Close</button>
             </div>
             <div id="sleepOverlayLog" class="p-4 space-y-2 overflow-y-auto flex-1 text-sm bg-white"></div>
+            <div class="p-6 mt-1 border-t border-gray-300">
+                <button onclick="window.location.href='wellness.html'" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300">
+                  Back to Wellness
+                </button>
+            </div>
         </div>
 
         <div class="flex justify-between items-center px-12 py-5 border-t border-gray-300">
