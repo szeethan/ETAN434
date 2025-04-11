@@ -8,404 +8,303 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 400;
-        src: url('./montserrat-v29-latin/montserrat-v29-latin-regular.woff2') format('woff2');
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./montserrat-v29-latin/montserrat-v29-latin-regular.woff2') format('woff2');
         }
-
         @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 600;
-        src: url('./montserrat-v29-latin/montserrat-v29-latin-600.woff2') format('woff2');
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./montserrat-v29-latin/montserrat-v29-latin-600.woff2') format('woff2');
         }
-
         @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 700;
-        src: url('./montserrat-v29-latin/montserrat-v29-latin-700.woff2') format('woff2');
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
+            src: url('./montserrat-v29-latin/montserrat-v29-latin-700.woff2') format('woff2');
         }
-
         body {
             font-family: "Montserrat", sans-serif;
-        }
-
-        @keyframes fillTimer {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        .animate-timer {
-            animation: fillTimer 120s linear forwards;
         }
     </style>
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-
-    <!-- Main App -->
-    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
-        <!-- Header -->
+    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col relative">
         <div class="flex items-center justify-between px-8 py-6 border-b border-gray-300">
             <h1 class="text-xl font-bold text-green-700">Harmony+</h1>
             <a href="profile.html" class="text-gray-700 hover:text-green-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-7 w-7"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M5.121 17.804A8.966 8.966 0 0112 15c2.285 0 4.355.876 5.879 2.304M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A8.966 8.966 0 0112 15c2.285 0 4.355.876 5.879 2.304M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
             </a>
         </div>
 
-        <!-- Wellness Content -->
-        <div class="p-4 flex-1 flex flex-col justify-start space-y-4">
-            <!-- Mood Check -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-3">How are you feeling?</h2>
-                <div class="flex justify-between space-x-2">
-                    <button class="mood-btn flex-1 bg-green-100 text-green-700 py-1.5 rounded text-xs hover:bg-green-200"
-                        data-mood="good">😊 Good</button>
-                    <button class="mood-btn flex-1 bg-yellow-100 text-yellow-700 py-1.5 rounded text-xs hover:bg-yellow-200"
-                        data-mood="okay">😐 Okay</button>
-                    <button class="mood-btn flex-1 bg-red-100 text-red-700 py-1.5 rounded text-xs hover:bg-red-200"
-                        data-mood="stressed">😣 Stressed</button>
-                </div>
-
-            </div>
-
-            <!-- Daily Wellness Tip -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-2">Daily Wellness Tip</h2>
-                <div class="bg-yellow-50 rounded-md p-3 text-sm text-gray-700">
-                    Take 5 deep breaths before starting your next task—it helps reset your nervous system.
-                </div>
-            </div>
-
-            <!-- Quick Relaxation -->
-            <div class="w-full flex flex-row gap-4">
-                <!-- Quick Relaxation -->
-                <div class="w-full flex justify-start">
-                    <div class="flex-1 rounded-xl shadow-sm p-4 flex flex-col items-center justify-start bg-white">
-                        <h2 class="text-lg font-semibold text-gray-900 mb-3">Quick Relaxation</h2>
-                
-                        <div class="relative w-32 h-32 mb-3">
-                            <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="16" stroke="#e5e7eb" stroke-width="3" fill="none" />
-                                <!-- This circle is available if you later wish to update its stroke-dashoffset to simulate progress -->
-                                <circle id="progressCircle" cx="18" cy="18" r="16" stroke="#16a34a" stroke-width="3" fill="none" stroke-dasharray="100"
-                                    stroke-dashoffset="100" style="transition: stroke-dashoffset 1s linear;" />
-
-                            </svg>
-                            <!-- Display timer text here -->
-                            <div id="timerText" class="absolute inset-0 flex items-center justify-center text-base font-semibold text-green-700">
-                                2:00
-                            </div>
-
-                        </div>
-                
-                        <div class="flex space-x-3 mb-2">
-                            <button onclick="startTimer()"
-                                class="bg-green-700 text-white px-4 py-1.5 rounded text-sm active:scale-95 transition-transform">
-                                Start
-                            </button>
-                            <button onclick="pauseTimer()"
-                                class="bg-gray-300 text-gray-800 px-4 py-1.5 rounded text-sm active:scale-95 transition-transform">
-                                Pause
-                            </button>
-
-
-                        </div>
-                
-                        <div class="flex items-center justify-between w-full max-w-[160px] mt-2">
-                            <label for="timerLength" class="text-sm text-gray-700 font-medium">Change Timer:</label>
-                            <select id="timerLength"
-                                class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
-                                <option value="1">1 Min</option>
-                                <option value="2" selected>2 Min</option>
-                                <option value="3">3 Min</option>
-                                <option value="5">5 Min</option>
-                            </select>
-                        </div>
+        <div class="p-4 flex-1 flex flex-col space-y-6">
+            <div class="flex flex-row gap-4 w-full">
+                <div class="flex-1 rounded-xl shadow-sm p-4 flex flex-col items-center bg-white">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-3">Quick Relaxation</h2>
+                    <div class="relative w-32 h-32 mb-4">
+                        <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="16" stroke="#e5e7eb" stroke-width="3" fill="none" />
+                            <circle id="progressCircle" cx="18" cy="18" r="16" stroke="#16a34a" stroke-width="3" fill="none" stroke-dasharray="100" stroke-dashoffset="100" style="transition: stroke-dashoffset 1s linear;" />
+                        </svg>
+                        <div id="timerText" class="absolute inset-0 flex items-center justify-center text-base font-semibold text-green-700">2:00</div>
                     </div>
-                </div>
-
-            
-                <!-- Gratitude Section -->
-                <div class=" p-4 shadow-sm flex flex-col justify-between w-full">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-3">Gratitude</h2>
-                    <textarea id="gratitudeInput" placeholder="What are you grateful for today?"
-                        class="resize-none border rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-green-600 h-32 mb-3"></textarea>
-                
-                    <div id="gratitudeButtons" class="flex justify-end space-x-2">
-                        <button onclick="submitGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">
-                            Add
-                        </button>
+                    <div class="flex space-x-3 mb-3">
+                        <button id="startStopBtn" onclick="toggleTimer()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm active:scale-95 transition-transform">Start</button>
+                        <button id="resetBtn" onclick="resetTimer()" class="bg-gray-300 text-gray-800 px-4 py-1.5 rounded text-sm active:scale-95 transition-transform">Reset</button>
                     </div>
-
-                </div>
-
-            </div>
-
-            <!-- Sleep Tracking -->
-             
-            <div>
-                
-                <h2 class="text-lg font-semibold text-gray-900 mb-3">Sleep Tracker</h2>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <label for="sleepHours" class="text-sm text-gray-700 font-medium">Hours Slept:</label>
-                        <input type="number" id="sleepHours" min="0" max="24"
-                        class="w-24 border rounded px-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <label for="sleepQuality" class="text-sm text-gray-700 font-medium">Quality:</label>
-                        <select id="sleepQuality"
-                            class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
-                            <option>Excellent</option>
-                            <option>Good</option>
-                            <option>Average</option>
-                            <option>Poor</option>
-                            <option>Terrible</option>
+                    <div class="flex items-center justify-between w-full max-w-[180px]">
+                        <label for="timerLength" class="text-sm text-gray-700 font-medium">Length:</label>
+                        <select id="timerLength" onchange="changeTimerLength()" class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
+                            <option value="1">1 Min</option>
+                            <option value="2" selected>2 Min</option>
+                            <option value="3">3 Min</option>
+                            <option value="5">5 Min</option>
                         </select>
                     </div>
-                    <button onclick="logSleep()"
-                        class="bg-green-700 text-white w-full py-1.5 rounded text-sm hover:bg-green-700">Log Sleep</button>
                 </div>
-            
-                <div class="mt-3">
-                    <h3 class="text-sm font-medium text-gray-800 mb-1">Recent Entries:</h3>
-                    <ul id="sleepLog" class="text-sm space-y-2 max-h-32 overflow-hidden"></ul>
-                    <div class="mt-2 flex justify-center">
-                        <button onclick="openSleepOverlay()"
-                            class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded border border-green-300 hover:bg-green-200 transition">
-                            View All Entries
-                        </button>
+
+                <div class="flex-1 rounded-xl shadow-sm p-4 bg-white flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900 mb-3">Gratitude Journal</h2>
+                        <div class="flex space-x-2 mb-3">
+                            <input id="gratitudeInput" type="text" placeholder="Something you're grateful for..." class="flex-1 border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
+                            <button onclick="addGratitude()" class="bg-green-700 text-white px-4 py-2 rounded text-sm">Add</button>
+                        </div>
+                        <ul id="gratitudeList" class="space-y-2 text-sm"></ul>
                     </div>
-
+                    <div class="mt-3 flex justify-center">
+                        <button onclick="openGratitudeOverlay()" class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded border border-green-300 hover:bg-green-200 transition">View All Entries</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Sleep Overlay -->
-            <div id="sleepOverlay"
-                class="absolute inset-0 bg-white z-50 hidden flex flex-col rounded-xl overflow-hidden w-full h-full max-w-[640px] mx-auto">
-
-
-                <div class="flex justify-between items-center px-4 py-3 border-b">
-                    <h2 class="text-xl font-bold text-green-700">All Sleep Entries</h2>
-                    <button onclick="closeSleepOverlay()"
-                        class="text-gray-600 hover:text-red-500 text-sm border px-2 py-1 rounded">Close</button>
+            <div class="rounded-xl shadow-sm p-3 bg-white">
+                <h2 class="text-lg font-semibold text-gray-900 mb-3">Sleep Tracker</h2>
+                <div class="flex flex-row gap-4">
+                    <div class="w-1/2 space-y-6 flex-col justify-between h-[160px]">
+                        <div class="flex items-center justify-between">
+                            <label for="sleepHours" class="text-sm text-gray-700 font-medium">Hours Slept:</label>
+                            <input type="number" id="sleepHours" min="0" max="24" class="w-24 border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-green-600" />
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label for="sleepQuality" class="text-sm text-gray-700 font-medium">Quality:</label>
+                            <select id="sleepQuality" class="border rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
+                                <option>Excellent</option>
+                                <option>Good</option>
+                                <option>Average</option>
+                                <option>Poor</option>
+                                <option>Terrible</option>
+                            </select>
+                        </div>
+                        <button onclick="logSleep()" class="bg-green-700 text-white w-full py-1.5 rounded text-sm hover:bg-green-800 transition-colors">Log Sleep</button>
+                    </div>
+                    <div class="w-1/2 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-800 mb-1">Recent Entries:</h3>
+                            <ul id="sleepLog" class="text-sm space-y-2 max-h-[96px] overflow-hidden"></ul>
+                        </div>
+                        <div class="flex justify-center pt-2">
+                            <button onclick="openSleepOverlay()" class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded border border-green-300 hover:bg-green-200 transition">View All Entries</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="sleepOverlayLog" class="p-4 space-y-2 overflow-y-auto flex-1 text-sm bg-gray-50"></div>
             </div>
 
+            <div class="rounded-xl shadow-sm p-4 bg-white">
+                <h2 class="text-lg font-semibold text-gray-900 mb-3">Daily Deals</h2>
+                <ul id="dealsList" class="space-y-3 text-sm"></ul>
+            </div>
         </div>
 
-        <!-- Navigation Bar -->
+        <div id="gratitudeOverlay" class="absolute inset-0 bg-white z-50 hidden flex flex-col rounded-xl overflow-hidden w-full h-full max-w-[640px] mx-auto">
+            <div class="flex justify-between items-center px-8 py-6 border-b border-gray-300">
+                <h2 class="text-xl font-bold text-green-700">All Gratitude Entries</h2>
+                <button onclick="closeGratitudeOverlay()" class="text-gray-600 hover:text-red-500 text-sm border px-2 py-1 rounded">Close</button>
+            </div>
+            <div id="gratitudeOverlayLog" class="p-4 space-y-2 overflow-y-auto flex-1 text-sm bg-white"></div>
+        </div>
+
+        <div id="sleepOverlay" class="absolute inset-0 bg-white z-50 hidden flex flex-col rounded-xl overflow-hidden w-full h-full max-w-[640px] mx-auto">
+            <div class="flex justify-between items-center px-8 py-6 border-b border-gray-300">
+                <h2 class="text-xl font-bold text-green-700">All Sleep Entries</h2>
+                <button onclick="closeSleepOverlay()" class="text-gray-600 hover:text-red-500 text-sm border px-2 py-1 rounded">Close</button>
+            </div>
+            <div id="sleepOverlayLog" class="p-4 space-y-2 overflow-y-auto flex-1 text-sm bg-white"></div>
+        </div>
+
         <div class="flex justify-between items-center px-12 py-5 border-t border-gray-300">
             <a href="mobile.html" class="flex flex-col items-center text-gray-600 hover:text-green-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-0.5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3 9.75l7.5-6 7.5 6v9.75a1.5 1.5 0 01-1.5 1.5h-3.75a.75.75 0 01-.75-.75v-4.5H9.75v4.5a.75.75 0 01-.75.75H5.25a1.5 1.5 0 01-1.5-1.5V9.75z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75l7.5-6 7.5 6v9.75a1.5 1.5 0 01-1.5 1.5h-3.75a.75.75 0 01-.75-.75v-4.5H9.75v4.5a.75.75 0 01-.75.75H5.25a1.5 1.5 0 01-1.5-1.5V9.75z" />
                 </svg>
                 <span class="text-xs font-medium">Home</span>
             </a>
             <a href="activity.html" class="flex flex-col items-center text-gray-600 hover:text-green-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-0.5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 <span class="text-xs font-medium">Activity</span>
             </a>
-            <a href="nutrition.html" class="flex flex-col items-center text-gray-600 hover:text-green-700">
-                <svg class="h-6 w-6 mb-0.5" fill="currentColor" viewBox="-3.33 0 100.001 100.001"
+            <a href="nutrition.html">
+                <button class="flex flex-col items-center text-gray-600 hover:text-green-700">
+                    <svg class="h-6 w-6 mb-0.5" fill="currentColor" viewBox="-3.33 0 100.001 100.001"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                     d="M588.106,980.092c-5.088-1.758-8.444-5.249-12.385-8.156-1.628-2.1-3.4-4.055-5.137-6.042-1.785-1.841-2.845-4.4-4.23-6.646a44.835,44.835,0,0,1-4.529-17.223V929.641c.136-1.371.542-2.479.6-3.928-.714-.083.346-.806.3-1.208-.218-.925.52-.89.3-1.814a16.835,16.835,0,0,0,1.212-3.321,10.719,10.719,0,0,0,1.206-3.02,2.8,2.8,0,0,0,1.207-1.814c.52-.389,1.19-.625,1.21-1.512,1.2-.713,1.795-2.03,2.718-3.019a69.073,69.073,0,0,1,18.43-9.065,47.789,47.789,0,0,1,14.2,1.51c-2.134-5.923-7.571-8.542-10.271-13.9-.2-1.307.524-1.7.908-2.417.565.01.584-.524.6-1.058s.039-1.071.607-1.058c2.742-.328,3.19,1.641,4.83,2.417,1.213,1.2,2,2.834,3.322,3.926a31.731,31.731,0,0,1,8.459-8.76A7.064,7.064,0,0,0,615,881c.987.012,1.993.008,3,0,4.254-.018,8.508-.035,11.5,1.205,1.158,4.693-1.63,7.755-2.417,11.481-1.175,1.138-1.945,2.687-3.019,3.927-1.3,1.013-2.529,2.106-3.929,3.02-3.695.741-7.974.086-11.179-.6.059,1.352.328,2.49,1.209,3.02.661.649,2.475.143,3.024.907a68.941,68.941,0,0,0,6.946-1.209h11.482a43.231,43.231,0,0,1,9.362,3.023,58.091,58.091,0,0,1,6.953,5.135c1.75,2.879,3.765,5.5,4.83,9.063,1.354,3.277,1.91,7.355,2.417,11.48v12.69a45.968,45.968,0,0,1-4.231,14.2c-1.591,4.549-4.82,7.466-7.247,11.178-2.193,1.43-3.924,3.329-6.046,4.833-1.947,1.578-4.5,2.545-6.643,3.929-1.932.385-4.236.4-5.742,1.208a11.478,11.478,0,0,1-2.72-.606c-.343.765-1.337.878-2.416.907-.2-.9-2.02-.2-2.117-1.21a1.4,1.4,0,0,1-1.129-.461,1.39,1.39,0,0,0-1.287-.445,8.057,8.057,0,0,0-5.437-1.21c-2.531.591-4.254,1.989-6.043,3.325-1.819-.108-2.476.946-3.925,1.209C596.191,980.673,591.641,980.891,588.106,980.092Zm7.553-10.27c1.6.6,1.081,2.451.907,4.229a3.9,3.9,0,0,0,2.079-.616,3.775,3.775,0,0,1,2.454-.592c.755-1.257.944-3.083,3.018-3.021.581-.027.744.364.908.754s.327.781.908.756c2.921-.375,6.414-1.539,9.664-.6a6.258,6.258,0,0,1,2.722-.906,18.153,18.153,0,0,1,3.324.6h3.32c2.885-.841,6.31-1.143,9.067-2.115a32.571,32.571,0,0,0,5.134-4.833,5.66,5.66,0,0,1,.3-2.415c2.661-3.082,5.457-6.028,6.345-10.878.279-2.541,1.111-4.529,1.509-6.949a78.209,78.209,0,0,1,.906-7.855c-1.086-5.256-2.6-10.091-2.416-16.616a9.677,9.677,0,0,1-.6-3.02c-.86-.551-1.1-1.719-2.119-2.116-.087-.616-.816-.594-.9-1.209-.373.041-.448-.214-.524-.47-.085-.289-.17-.578-.687-.436a33.6,33.6,0,0,0-11.176-4.229,43.368,43.368,0,0,1-4.568-.166,24.951,24.951,0,0,0-7.217.166c-1.022.185-.482,1.932-1.812,1.814a7.191,7.191,0,0,1-2.193-.16,6.97,6.97,0,0,0-2.339-.143c-.435.976-.284,2.534-.3,3.929,2.275.058,3.32-1.113,5.437-1.21a4.763,4.763,0,0,1,3.929-1.813,2.44,2.44,0,0,1,1.81,2.114,6.781,6.781,0,0,1-1.81,3.929c-3.178,1.151-6.337,2.326-9.671,3.321h-7.854c-1.517-.493-3.386-.642-4.53-1.508-1.692-.323-3.181-.846-3.325-2.72.055-1.614,1.77-1.569,3.484-1.524.354.009.708.018,1.049.013a13.735,13.735,0,0,0,5.436.3c-.087-1.826.243-4.07-.3-5.437-2.739-.747-6.292-.677-9.846-.607-1.786.035-3.573.07-5.256,0-1.519.3-3.009.618-4.533.907-.4.5-1.345.47-1.814.908-.636.266-.894.916-1.812.9-1.872,1.756-4.982,2.269-6.042,4.836,1.775-.266,2.737.282,3.022,1.508-.044,2.074-1.4,2.829-1.815,4.531a29.279,29.279,0,0,0-1.812,4.837c.372.374.716.232,1.157.089a2.132,2.132,0,0,1,1.259-.089c.345.665,1.009,1,1.211,1.814-.854.756-.959,2.263-1.815,3.019-.846,3.083-1.78,6.076-2.416,9.367.282,1.546-1.138,3.731.3,4.531.517-1.9.989-3.847,3.323-3.928.068.567.779,2,0,2.418a4.411,4.411,0,0,1-.6,2.719,10.641,10.641,0,0,1-.3,3.022c.426,1.249-.86,2.333,0,3.02.666-1.552.473-3.961,3.022-3.623.756,2.615-.166,6.041-.606,8.456.418.39.3,1.314.305,2.115-.5.606.024,2.24-.606,2.72.188.917-.386,2.6.3,3.02.56-2.26.9-4.744,3.928-4.531,1,.31,1.018,1.6,1.211,2.717.692-.192,1.819-.6,2.417,0,.164,1.147.729,1.889.6,3.326,1.126-.284,1.571-1.247,3.324-.908,1.153,2.133-.9,5.736.6,7.252.006-.5.839-.169.908-.6.7.093.335-.873.907-.905.388-.589.714-1.244,1.693-1.244A2.684,2.684,0,0,1,595.659,969.822Z"
                     transform="translate(-561.825 -880.999)" />
-                </svg>
-                <span class="text-xs font-medium">Nutrition</span>
-            </a>
+                          </svg>
+                    <span class="text-xs font-medium">Nutrition</span>
+            </button></a>
             <a href="wellness.html" class="flex flex-col items-center text-green-700">
                 <svg class="h-6 w-6 mb-0.5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z" />
+                    <path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z" />
                 </svg>
                 <span class="text-xs font-medium">Wellness</span>
             </a>
         </div>
     </div>
 
-    
-
     <script>
-        
-
-        let timerInterval;
-        let totalTime = 120;
-        let remainingTime = totalTime;
-        let isRunning = false;
-        let isPaused = false;
-
-        function startTimer() {
-            const selectedMinutes = parseInt(document.getElementById("timerLength").value);
-            totalTime = selectedMinutes * 60;
-            remainingTime = totalTime;
-            updateTimerDisplay();
-
-            clearInterval(timerInterval);
-            isRunning = true;
-            isPaused = false;
-
-            timerInterval = setInterval(() => {
-                if (remainingTime <= 0) {
-                    clearInterval(timerInterval);
-                    isRunning = false;
-                    document.getElementById("timerText").textContent = "Done";
-                    return;
-                }
-                remainingTime--;
-                updateTimerDisplay();
-            }, 1000);
-        }
-
-        function pauseTimer() {
-            if (!isRunning && remainingTime > 0) {
-                isRunning = true;
-                isPaused = false;
-                timerInterval = setInterval(() => {
-                    if (remainingTime <= 0) {
-                        clearInterval(timerInterval);
-                        isRunning = false;
-                        document.getElementById("timerText").textContent = "Done";
-                        return;
-                    }
-                    remainingTime--;
-                    updateTimerDisplay();
-                }, 1000);
-            } else {
-                clearInterval(timerInterval);
-                isRunning = false;
-                isPaused = true;
-            }
-        }
-
-
-
-            function updateTimerDisplay() {
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-                    const formatted = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-                    document.getElementById("timerText").textContent = formatted;
-
-                    const circle = document.getElementById("progressCircle");
-                    const progressPercent = remainingTime / totalTime;
-                    const dashoffset = 100 * progressPercent;
-                    circle.setAttribute("stroke-dashoffset", dashoffset);
-                }
-
-
-            window.onload = () => {
-                updateTimerDisplay();
+        function getQualityColor(quality) {
+            const colors = {
+                'Excellent': 'bg-green-100',
+                'Good': 'bg-green-50',
+                'Average': 'bg-yellow-100',
+                'Poor': 'bg-orange-100',
+                'Terrible': 'bg-red-100'
             };
+            return colors[quality] || 'bg-gray-100';
+        }
 
+        function createSleepEntry(entry) {
+            const li = document.createElement('li');
+            li.className = `${getQualityColor(entry.quality)} px-3 py-1 rounded shadow-sm mb-1`;
+            li.textContent = `${new Date(entry.date).toLocaleDateString()}: ${entry.hours}h - ${entry.quality}`;
+            return li;
+        }
+
+        function createGratitudeEntry(text, dateISO) {
+            const li = document.createElement('li');
+            li.className = 'bg-gray-50 px-3 py-2 rounded shadow-sm';
+            li.textContent = `${new Date(dateISO).toLocaleDateString()} – ${text}`;
+            return li;
+        }
+
+        function updateSleepDisplay() {
+            const entries = JSON.parse(localStorage.getItem('sleepEntries') || '[]');
+            const sleepLog = document.getElementById('sleepLog');
+            const overlayLog = document.getElementById('sleepOverlayLog');
+            sleepLog.innerHTML = '';
+            overlayLog.innerHTML = '';
+            entries.slice(0, 3).forEach(entry => sleepLog.appendChild(createSleepEntry(entry)));
+            entries.forEach(entry => overlayLog.appendChild(createSleepEntry(entry)));
+        }
 
         function logSleep() {
-                const hours = document.getElementById('sleepHours').value;
-                const quality = document.getElementById('sleepQuality').value;
-                if (!hours) return;
-
-                const date = new Date().toLocaleDateString();
-                const text = `${date}: Slept ${hours}h - ${quality}`;
-                const bgColor = "bg-gray-100";
-
-
-                const log = document.getElementById('sleepLog');
-                const entry = document.createElement('li');
-                entry.className = `${bgColor} px-3 py-1 rounded shadow-sm`;
-                entry.textContent = text;
-                log.prepend(entry);
-
-                const logItems = document.querySelectorAll('#sleepLog li');
-                logItems.forEach((item, index) => {
-                    item.classList.toggle('hidden', index >= 3);
-                });
-
-                const overlayLog = document.getElementById('sleepOverlayLog');
-                const overlayEntry = document.createElement('div');
-                overlayEntry.className = `${bgColor} px-3 py-2 rounded shadow-sm`;
-                overlayEntry.textContent = text;
-                overlayLog.prepend(overlayEntry);
-
-                document.getElementById('sleepHours').value = '';
-                document.getElementById('sleepQuality').selectedIndex = 0;
-            }
-
-
-        function openSleepOverlay() {
-            const overlay = document.getElementById('sleepOverlay');
-            overlay.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            overlay.scrollTop = 0;
+            const hours = document.getElementById('sleepHours').value;
+            const quality = document.getElementById('sleepQuality').value;
+            if (!hours) return;
+            const newEntry = { date: new Date().toISOString(), hours, quality };
+            const entries = JSON.parse(localStorage.getItem('sleepEntries') || '[]');
+            entries.unshift(newEntry);
+            localStorage.setItem('sleepEntries', JSON.stringify(entries));
+            updateSleepDisplay();
+            document.getElementById('sleepHours').value = '';
+            document.getElementById('sleepQuality').selectedIndex = 1;
         }
 
-        function closeSleepOverlay() {
-            document.getElementById('sleepOverlay').classList.add('hidden');
+        const gratitudeKey = 'gratitudeEntries';
+        function loadGratitude() {
+            const entries = JSON.parse(localStorage.getItem(gratitudeKey) || '[]');
+            const list = document.getElementById('gratitudeList');
+            const overlayLog = document.getElementById('gratitudeOverlayLog');
+            list.innerHTML = '';
+            overlayLog.innerHTML = '';
+            entries.slice(0, 3).forEach(e => list.appendChild(createGratitudeEntry(e.text, e.date)));
+            entries.forEach(e => overlayLog.appendChild(createGratitudeEntry(e.text, e.date)));
         }
-        function submitGratitude() {
-                const input = document.getElementById("gratitudeInput");
-                const buttons = document.getElementById("gratitudeButtons");
+        function addGratitude() {
+            const input = document.getElementById('gratitudeInput');
+            const text = input.value.trim();
+            if (!text) return;
+            const newEntry = { text, date: new Date().toISOString() };
+            const entries = JSON.parse(localStorage.getItem(gratitudeKey) || '[]');
+            entries.unshift(newEntry);
+            localStorage.setItem(gratitudeKey, JSON.stringify(entries));
+            input.value = '';
+            loadGratitude();
+        }
 
-                if (!input.value.trim()) return;
+        function openSleepOverlay() { document.getElementById('sleepOverlay').classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function closeSleepOverlay() { document.getElementById('sleepOverlay').classList.add('hidden'); }
+        function openGratitudeOverlay() { document.getElementById('gratitudeOverlay').classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function closeGratitudeOverlay() { document.getElementById('gratitudeOverlay').classList.add('hidden'); }
 
-                input.disabled = true;
+        let timerInterval, totalTime = 120, remainingTime = totalTime, isRunning = false;
+        function changeTimerLength() { totalTime = parseInt(document.getElementById('timerLength').value) * 60; remainingTime = totalTime; updateTimerDisplay(); }
+        function toggleTimer() { isRunning ? stopTimer() : startTimer(); }
+        function startTimer() {
+            const m = parseInt(document.getElementById('timerLength').value);
+            if (!isRunning) { totalTime = m * 60; remainingTime = totalTime; }
+            isRunning = true;
+            document.getElementById('startStopBtn').textContent = 'Stop';
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                remainingTime--; updateTimerDisplay();
+                if (remainingTime <= 0) { stopTimer(); document.getElementById('timerText').textContent = 'Done'; }
+            }, 1000);
+        }
+        function stopTimer() { clearInterval(timerInterval); isRunning = false; document.getElementById('startStopBtn').textContent = 'Start'; }
+        function resetTimer() { remainingTime = parseInt(document.getElementById('timerLength').value) * 60; stopTimer(); updateTimerDisplay(); }
+        function updateTimerDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            document.getElementById('timerText').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('progressCircle').setAttribute('stroke-dashoffset', 100 * (remainingTime / totalTime));
+        }
 
-                buttons.innerHTML = `<button onclick="editGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">Edit</button>
-                                    <button onclick="deleteGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">Delete</button>`;}
+        const deals = [
+            { id: 1, title: '50% off Yoga Class', code: 'ZEN50' },
+            { id: 2, title: 'Free Smoothie w/ Personal Training', code: 'FUELUP' },
+            { id: 3, title: '25% off Spa Massage', code: 'RELAX25' }
+        ];
+        const redeemedKey = 'redeemedDeals';
+        function loadDeals() {
+            const redeemed = JSON.parse(localStorage.getItem(redeemedKey) || '[]');
+            const list = document.getElementById('dealsList');
+            list.innerHTML = '';
+            deals.forEach(d => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center bg-green-50 px-3 py-2 rounded';
+                if (redeemed.includes(d.id)) {
+                    li.innerHTML = `<span>${d.title}</span><span class='text-green-700 font-semibold'>${d.code}</span>`;
+                } else {
+                    li.innerHTML = `<span>${d.title}</span><button class='bg-green-700 text-white text-xs px-2 py-1 rounded' onclick='redeemDeal(${d.id})'>Get Offer</button>`;
+                }
+                list.appendChild(li);
+            });
+        }
+        function redeemDeal(id) {
+            const redeemed = JSON.parse(localStorage.getItem(redeemedKey) || '[]');
+            if (!redeemed.includes(id)) redeemed.push(id);
+            localStorage.setItem(redeemedKey, JSON.stringify(redeemed));
+            loadDeals();
+            const deal = deals.find(d => d.id === id);
+            navigator.clipboard?.writeText(deal.code);
+            alert(`Coupon code "${deal.code}" copied to clipboard!`);
+        }
 
-            function editGratitude() {
-                const input = document.getElementById("gratitudeInput");
-                const buttons = document.getElementById("gratitudeButtons");
-
-                input.disabled = false;
-                input.focus();
-
-                buttons.innerHTML = `<button onclick="submitGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">Add</button>`;}
-
-            function deleteGratitude() {
-                const input = document.getElementById("gratitudeInput");
-                const buttons = document.getElementById("gratitudeButtons");
-
-                input.disabled = false;
-                input.value = "";
-
-                buttons.innerHTML = ` <button onclick="submitGratitude()" class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">Add</button>`;}
-
-            document.querySelectorAll('.mood-btn').forEach(button => {
-                    button.addEventListener('click', () => {
-                        document.querySelectorAll('.mood-btn').forEach(btn => {
-                            btn.classList.remove('ring-2', 'ring-green-500');
-                        });
-                        button.classList.add('ring-2', 'ring-green-500');
-                    });
-                });
-
-
-
+        window.onload = () => {
+            changeTimerLength();
+            loadGratitude();
+            loadDeals();
+            updateSleepDisplay();
+        };
     </script>
-    
 </body>
-
 </html>
