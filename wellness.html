@@ -75,13 +75,14 @@
             <div>
                 <h2 class="text-lg font-semibold text-gray-900 mb-3">How are you feeling?</h2>
                 <div class="flex justify-between space-x-2">
-                    <button class="flex-1 bg-green-100 text-green-700 py-1.5 rounded text-xs hover:bg-green-200">😊
-                        Good</button>
-                    <button class="flex-1 bg-yellow-100 text-yellow-700 py-1.5 rounded text-xs hover:bg-yellow-200">😐
-                        Okay</button>
-                    <button class="flex-1 bg-red-100 text-red-700 py-1.5 rounded text-xs hover:bg-red-200">😣
-                        Stressed</button>
+                    <button class="mood-btn flex-1 bg-green-100 text-green-700 py-1.5 rounded text-xs hover:bg-green-200"
+                        data-mood="good">😊 Good</button>
+                    <button class="mood-btn flex-1 bg-yellow-100 text-yellow-700 py-1.5 rounded text-xs hover:bg-yellow-200"
+                        data-mood="okay">😐 Okay</button>
+                    <button class="mood-btn flex-1 bg-red-100 text-red-700 py-1.5 rounded text-xs hover:bg-red-200"
+                        data-mood="stressed">😣 Stressed</button>
                 </div>
+
             </div>
 
             <!-- Daily Wellness Tip -->
@@ -94,45 +95,61 @@
 
             <!-- Quick Relaxation -->
             <div class="w-full flex flex-row gap-4">
-                <div class="flex-1 rounded-xl shadow-sm p-4 flex flex-col items-center justify-start bg-white">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-3">Quick Relaxation</h2>
-            
-                    <div class="relative w-32 h-32 mb-3">
-                        <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="16" stroke="#e5e7eb" stroke-width="3" fill="none" />
-                            <circle cx="18" cy="18" r="16" stroke="#16a34a" stroke-width="3" fill="none" stroke-dasharray="100"
-                                stroke-dashoffset="100" class="animate-timer" />
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center text-base font-semibold text-green-700">
-                            2:00
+                <!-- Quick Relaxation -->
+                <div class="w-full flex justify-start">
+                    <div class="flex-1 rounded-xl shadow-sm p-4 flex flex-col items-center justify-start bg-white">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-3">Quick Relaxation</h2>
+                
+                        <div class="relative w-32 h-32 mb-3">
+                            <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="16" stroke="#e5e7eb" stroke-width="3" fill="none" />
+                                <!-- This circle is available if you later wish to update its stroke-dashoffset to simulate progress -->
+                                <circle id="progressCircle" cx="18" cy="18" r="16" stroke="#16a34a" stroke-width="3" fill="none" stroke-dasharray="100"
+                                    stroke-dashoffset="100" style="transition: stroke-dashoffset 1s linear;" />
+
+                            </svg>
+                            <!-- Display timer text here -->
+                            <div id="timerText" class="absolute inset-0 flex items-center justify-center text-base font-semibold text-green-700">
+                                2:00
+                            </div>
+
+                        </div>
+                
+                        <div class="flex space-x-3 mb-2">
+                            <button onclick="startTimer()"
+                                class="bg-green-700 text-white px-4 py-1.5 rounded text-sm active:scale-95 transition-transform">
+                                Start
+                            </button>
+                            <button onclick="pauseTimer()"
+                                class="bg-gray-300 text-gray-800 px-4 py-1.5 rounded text-sm active:scale-95 transition-transform">
+                                Pause
+                            </button>
+
+
+                        </div>
+                
+                        <div class="flex items-center justify-between w-full max-w-[160px] mt-2">
+                            <label for="timerLength" class="text-sm text-gray-700 font-medium">Change Timer:</label>
+                            <select id="timerLength"
+                                class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
+                                <option value="1">1 Min</option>
+                                <option value="2" selected>2 Min</option>
+                                <option value="3">3 Min</option>
+                                <option value="5">5 Min</option>
+                            </select>
                         </div>
                     </div>
-            
-                    <div class="flex space-x-3 mb-2">
-                        <button class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">Start</button>
-                        <button class="bg-gray-300 text-gray-800 px-4 py-1.5 rounded text-sm hover:bg-gray-400">Pause</button>
-                    </div>
-            
-                    <div class="flex items-center justify-between w-full max-w-[160px] mt-2">
-                        <label for="timerLength" class="text-sm text-gray-700 font-medium">Change Timer:</label>
-                        <select id="timerLength"
-                            class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-green-600">
-                            <option>1 Min</option>
-                            <option selected>2 Min</option>
-                            <option>3 Min</option>
-                            <option>5 Min</option>
-                        </select>
-                    </div>
                 </div>
+
             
                 <!-- Gratitude Section -->
-                <div class=" p-4 flex flex-col justify-between w-full">
+                <div class=" p-4 shadow-sm flex flex-col justify-between w-full">
                     <h2 class="text-lg font-semibold text-gray-900 mb-3">Gratitude</h2>
                     <textarea id="gratitudeInput" placeholder="What are you grateful for today?"
                         class="resize-none border rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-green-600 h-32 mb-3"></textarea>
                 
                     <div id="gratitudeButtons" class="flex justify-end space-x-2">
-                        <button onclick="submitGratitude()" class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">
+                        <button onclick="submitGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">
                             Add
                         </button>
                     </div>
@@ -182,7 +199,8 @@
 
             <!-- Sleep Overlay -->
             <div id="sleepOverlay"
-                class="absolute top-0 left-0 w-full h-full bg-white z-50 hidden flex flex-col rounded-xl overflow-hidden">
+                class="absolute inset-0 bg-white z-50 hidden flex flex-col rounded-xl overflow-hidden w-full h-full max-w-[640px] mx-auto">
+
 
                 <div class="flex justify-between items-center px-4 py-3 border-b">
                     <h2 class="text-xl font-bold text-green-700">All Sleep Entries</h2>
@@ -233,6 +251,77 @@
     
 
     <script>
+        
+
+        let timerInterval;
+        let totalTime = 120;
+        let remainingTime = totalTime;
+        let isRunning = false;
+        let isPaused = false;
+
+        function startTimer() {
+            const selectedMinutes = parseInt(document.getElementById("timerLength").value);
+            totalTime = selectedMinutes * 60;
+            remainingTime = totalTime;
+            updateTimerDisplay();
+
+            clearInterval(timerInterval);
+            isRunning = true;
+            isPaused = false;
+
+            timerInterval = setInterval(() => {
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    document.getElementById("timerText").textContent = "Done";
+                    return;
+                }
+                remainingTime--;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (!isRunning && remainingTime > 0) {
+                isRunning = true;
+                isPaused = false;
+                timerInterval = setInterval(() => {
+                    if (remainingTime <= 0) {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        document.getElementById("timerText").textContent = "Done";
+                        return;
+                    }
+                    remainingTime--;
+                    updateTimerDisplay();
+                }, 1000);
+            } else {
+                clearInterval(timerInterval);
+                isRunning = false;
+                isPaused = true;
+            }
+        }
+
+
+
+            function updateTimerDisplay() {
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+                    const formatted = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+                    document.getElementById("timerText").textContent = formatted;
+
+                    const circle = document.getElementById("progressCircle");
+                    const progressPercent = remainingTime / totalTime;
+                    const dashoffset = 100 * progressPercent;
+                    circle.setAttribute("stroke-dashoffset", dashoffset);
+                }
+
+
+            window.onload = () => {
+                updateTimerDisplay();
+            };
+
+
         function logSleep() {
                 const hours = document.getElementById('sleepHours').value;
                 const quality = document.getElementById('sleepQuality').value;
@@ -283,8 +372,8 @@
 
                 input.disabled = true;
 
-                buttons.innerHTML = `<button onclick="editGratitude()" class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">Edit</button>
-                                    <button onclick="deleteGratitude()" class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">Delete</button>`;}
+                buttons.innerHTML = `<button onclick="editGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">Edit</button>
+                                    <button onclick="deleteGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">Delete</button>`;}
 
             function editGratitude() {
                 const input = document.getElementById("gratitudeInput");
@@ -293,7 +382,7 @@
                 input.disabled = false;
                 input.focus();
 
-                buttons.innerHTML = `<button onclick="submitGratitude()" class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">Add</button>`;}
+                buttons.innerHTML = `<button onclick="submitGratitude()" class="bg-green-700 text-white px-4 py-1.5 rounded text-sm ">Add</button>`;}
 
             function deleteGratitude() {
                 const input = document.getElementById("gratitudeInput");
@@ -303,6 +392,16 @@
                 input.value = "";
 
                 buttons.innerHTML = ` <button onclick="submitGratitude()" class="7 text-white px-4 py-1.5 rounded text-sm hover:bg-green-700">Add</button>`;}
+
+            document.querySelectorAll('.mood-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.mood-btn').forEach(btn => {
+                            btn.classList.remove('ring-2', 'ring-green-500');
+                        });
+                        button.classList.add('ring-2', 'ring-green-500');
+                    });
+                });
+
 
 
     </script>
