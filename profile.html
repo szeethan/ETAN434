@@ -8,29 +8,26 @@
 
     <style>
       @font-face {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 400;
-      src: url('./montserrat-v29-latin/montserrat-v29-latin-regular.woff2') format('woff2');
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        src: url('./montserrat-v29-latin/montserrat-v29-latin-regular.woff2') format('woff2');
       }
-
       @font-face {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 600;
-      src: url('./montserrat-v29-latin/montserrat-v29-latin-600.woff2') format('woff2');
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 600;
+        src: url('./montserrat-v29-latin/montserrat-v29-latin-600.woff2') format('woff2');
       }
-
       @font-face {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 700;
-      src: url('./montserrat-v29-latin/montserrat-v29-latin-700.woff2') format('woff2');
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-    }
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 700;
+        src: url('./montserrat-v29-latin/montserrat-v29-latin-700.woff2') format('woff2');
+      }
+      body {
+        font-family: 'Montserrat', sans-serif;
+      }
     </style>
   </head>
   <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
@@ -48,37 +45,17 @@
       <form id="profileForm" class="space-y-4">
         <div>
           <label for="age" class="block text-gray-700 font-medium mb-1">Age</label>
-          <input
-            type="number"
-            id="age"
-            name="age"
-            class="w-full border border-gray-300 rounded-md p-2"
-            required
-          />
+          <input type="number" id="age" name="age" class="w-full border border-gray-300 rounded-md p-2" required />
         </div>
 
         <div>
           <label for="height" class="block text-gray-700 font-medium mb-1">Height</label>
-          <input
-            type="number"
-            id="height"
-            name="height"
-            class="w-full border border-gray-300 rounded-md p-2"
-            required
-            placeholder="Height (cm)"
-          />
+          <input type="number" id="height" name="height" class="w-full border border-gray-300 rounded-md p-2" required placeholder="Height (cm)" />
         </div>
 
         <div>
           <label for="weight" class="block text-gray-700 font-medium mb-1">Weight</label>
-          <input
-            type="number"
-            id="weight"
-            name="weight"
-            class="w-full border border-gray-300 rounded-md p-2"
-            required
-            placeholder="Weight (kg)"
-          />
+          <input type="number" id="weight" name="weight" class="w-full border border-gray-300 rounded-md p-2" required placeholder="Weight (kg)" />
         </div>
 
         <div>
@@ -100,101 +77,97 @@
         </div>
 
         <div class="mt-4">
-          <label for="goals" class="block text-gray-700 font-medium mb-1">
-            Goals (e.g., BMI target, fitness type)
-          </label>
-          <textarea
-            id="goals"
-            name="goals"
-            rows="3"
-            class="w-full border border-gray-300 rounded-md p-2"
-            placeholder="Example: 'Maintain a BMI of ~22, bench 225.'"
-            required
-          ></textarea>
+          <label for="goals" class="block text-gray-700 font-medium mb-1">Goals (e.g., BMI target, fitness type)</label>
+          <textarea id="goals" name="goals" rows="3" class="w-full border border-gray-300 rounded-md p-2" placeholder="Example: 'Maintain a BMI of ~22, bench 225.'" required></textarea>
         </div>
 
         <div>
-            <label class="block text-gray-700 font-medium mb-1">Fitness Interests</label>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">🏋️ Weight Lifting</span>
-              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">🏃 Running</span>
-              <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">🧘 Yoga</span>
-              <button class="text-gray-500 hover:text-green-700">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                </svg>
-              </button>
-            </div>
+          <label class="block text-gray-700 font-medium mb-1">Fitness Interests</label>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">🏋️ Weight Lifting</span>
+            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">🏃 Running</span>
+            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">🧘 Yoga</span>
+            <button type="button" class="text-gray-500 hover:text-green-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </button>
           </div>
+        </div>
 
         <div class="py-4">
-          <button
-            type="submit"
-            class="w-full bg-green-700 text-white rounded-md py-2 font-medium hover:bg-green-800"
-          >
-            Save Profile
-          </button>
+          <button type="submit" class="w-full bg-green-700 text-white rounded-md py-2 font-medium hover:bg-green-800">Save Profile</button>
         </div>
       </form>
 
       <div class="py-4">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Share Your Progress</h2>
-        <p class="text-gray-600 text-sm mb-2">
-          Share your progress with friends or family and celebrate wins together! 🎉
-        </p>
-        <button
-          id="shareButton"
-          class="w-full bg-blue-600 text-white rounded-md py-2 font-medium hover:bg-blue-700"
-        >
-          Share 🔗
-        </button>
+        <p class="text-gray-600 text-sm mb-2">Share your progress with friends or family and celebrate wins together! 🎉</p>
+        <button id="shareButton" class="w-full bg-blue-600 text-white rounded-md py-2 font-medium hover:bg-blue-700">Share 🔗</button>
       </div>
 
       <div class="mt-4 text-center">
-        <a href="mobile.html" class="text-green-700 hover:underline font-medium">
-          Back to Home
-        </a>
+        <a href="mobile.html" class="text-green-700 hover:underline font-medium">Back to Home</a>
       </div>
     </div>
 
     <script>
-      let currentUnit = "metric";
-      const unitToggle = document.getElementById("unitToggle");
-      const toggleIndicator = document.getElementById("toggleIndicator");
-      const heightInput = document.getElementById("height");
-      const weightInput = document.getElementById("weight");
+      const STORAGE_KEY = 'userProfile';
+      let currentUnit = 'metric';
+
+      const unitToggle = document.getElementById('unitToggle');
+      const toggleIndicator = document.getElementById('toggleIndicator');
+      const heightInput = document.getElementById('height');
+      const weightInput = document.getElementById('weight');
 
       function setUnit(unit) {
         currentUnit = unit;
-        if (unit === "metric") {
-          toggleIndicator.style.transform = "translateX(14%)";
-          heightInput.placeholder = "Height (cm)";
-          weightInput.placeholder = "Weight (kg)";
+        if (unit === 'metric') {
+          toggleIndicator.style.transform = 'translateX(14%)';
+          heightInput.placeholder = 'Height (cm)';
+          weightInput.placeholder = 'Weight (kg)';
         } else {
-          toggleIndicator.style.transform = "translateX(119%)";
-          heightInput.placeholder = "Height (in)";
-          weightInput.placeholder = "Weight (lb)";
+          toggleIndicator.style.transform = 'translateX(119%)';
+          heightInput.placeholder = 'Height (in)';
+          weightInput.placeholder = 'Weight (lb)';
         }
       }
 
-      unitToggle.addEventListener("click", function() {
-        setUnit(currentUnit === "metric" ? "imperial" : "metric");
+      unitToggle.addEventListener('click', () => {
+        setUnit(currentUnit === 'metric' ? 'imperial' : 'metric');
       });
 
-      setUnit("metric");
-
-        document.getElementById("profileForm").addEventListener("submit", function (e) {
+      document.getElementById('profileForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const profileData = {
           units: currentUnit,
-          age: document.getElementById("age").value,
+          age: document.getElementById('age').value,
           height: heightInput.value,
           weight: weightInput.value,
           gender: document.querySelector('input[name="gender"]:checked').value,
-          goals: document.getElementById("goals").value,
+          goals: document.getElementById('goals').value
         };
-        localStorage.setItem("userProfile", JSON.stringify(profileData));
-        alert("Profile saved successfully!");
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(profileData));
+        alert('Profile saved successfully!');
+      });
+
+      function loadProfile() {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (!data) { setUnit('metric'); return; }
+
+        setUnit(data.units || 'metric');
+        if (data.age) document.getElementById('age').value = data.age;
+        if (data.height) heightInput.value = data.height;
+        if (data.weight) weightInput.value = data.weight;
+        if (data.gender) {
+          const genderRadio = document.querySelector(`input[name="gender"][value="${data.gender}"]`);
+          if (genderRadio) genderRadio.checked = true;
+        }
+        if (data.goals) document.getElementById('goals').value = data.goals;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        loadProfile();
       });
     </script>
   </body>
