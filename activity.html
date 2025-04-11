@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Harmony+ Activity</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/chart.umd.js"></script> 
     <style>
         @font-face {
         font-family: 'Montserrat';
@@ -91,6 +92,30 @@
                 </div>
             </div>
 
+
+            <!-- Activity Chart -->
+            <!-- Activity Chart -->
+            <div class="bg-green-50 p-3 rounded-lg shadow-sm mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-sm font-semibold text-green-800">Activity Minutes</h3>
+                    <select id="dayRange" class="text-xs bg-white border rounded px-2 py-1">
+                        <option value="3">Last 3 Days</option>
+                        <option value="5">Last 5 Days</option>
+                        <option value="7" selected>Last 7 Days</option>
+                        <option value="10">Last 10 Days</option>
+                    </select>
+                </div>
+                <canvas id="activityChart" height="50"></canvas>
+            </div>
+
+
+            <div>
+                <div class="bg-green-50 rounded-lg p-4 mt-2">
+                <h4 class="text-base font-semibold text-green-800">Daily Workout Suggestion</h4>
+                <p class="text-sm text-gray-700 mt-1" id="dailyTip">Crush a HIIT session with 💥 burpees, 🏋️ kettlebell swings, 🤸 jump lunges, and 🔥 battle ropes — 30s on, short rest, repeat.</p>
+              </div>
+            </div>
+
             <button class="mt-auto bg-green-700 text-white py-2.5 rounded-lg text-sm font-semibold" onclick="window.location.href='enteractivity.html'">
                 Enter Activity
             </button>
@@ -136,17 +161,88 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const workouts = JSON.parse(localStorage.getItem('workouts') || []);
-            
+        function getLastNDays(n) {
+            const days = [];
+            const now = new Date();
+            for (let i = n - 1; i >= 0; i--) {
+                const date = new Date(now);
+                date.setDate(now.getDate() - i);
+                days.push({
+                    key: date.toISOString().slice(0, 10),
+                    label: date.toLocaleDateString(undefined, { weekday: 'short' })
+                });
+            }
+            return days;
+        }
+    
+        function getActivityData(days, workouts) {
+            const map = {};
+            workouts.forEach(w => {
+                const day = new Date(w.timestamp).toISOString().slice(0, 10);
+                if (!map[day]) map[day] = 0;
+                map[day] += parseInt(w.duration || 0);
+            });
+            return days.map(d => map[d.key] || 0);
+        }
+    
+        function renderActivityChart(daysToShow) {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            let workouts = [];
+            try {
+                workouts = JSON.parse(localStorage.getItem('workouts') || "[]");
+            } catch (e) {
+                console.error("Error parsing workouts from localStorage:", e);
+                workouts = [];
+            }
+    
+            const days = getLastNDays(daysToShow);
+            const labels = days.map(d => d.label);
+            const data = getActivityData(days, workouts);
+            console.log(data);
+            console.log(labels)
+    
+
+           // Check if our custom chart instance exists and destroy it if it does.
+            if (window.activityChartInstance && typeof window.activityChartInstance.destroy === 'function') {
+                window.activityChartInstance.destroy();
+            }
+
+            // Create a new Chart instance and assign it to a differently-named global variable.
+            window.activityChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        data,
+                        borderColor: '#4C9F70',
+                        backgroundColor: 'rgba(76, 159, 112, 0.2)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false }},
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 10 }
+                        }
+                    }
+                }
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const workouts = JSON.parse(localStorage.getItem('workouts') || "[]");
             workouts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
+    
             const horizontalContainer = document.querySelector('.flex.space-x-4');
             const recentContainer = document.querySelector('.space-y-2');
-            
+    
             horizontalContainer.innerHTML = '';
             recentContainer.innerHTML = '';
-            
+    
             workouts.slice(0, 5).forEach(workout => {
                 const workoutCard = document.createElement('div');
                 workoutCard.className = 'min-w-[180px] bg-[#FFF8E1] rounded-lg p-3';
@@ -157,14 +253,14 @@
                 `;
                 horizontalContainer.appendChild(workoutCard);
             });
-            
-            workouts.forEach(workout => {
+    
+            workouts.slice(0, 3).forEach(workout => {
                 const recentItem = document.createElement('div');
                 recentItem.className = 'flex justify-between items-center p-2 bg-[#F8F8F8] rounded';
-                
+    
                 const workoutDate = new Date(workout.timestamp);
                 const timeDiff = getTimeDifference(workoutDate);
-                
+    
                 recentItem.innerHTML = `
                     <div>
                         <p class="text-sm font-medium text-[#333333]">${workout.name}</p>
@@ -174,19 +270,26 @@
                 `;
                 recentContainer.appendChild(recentItem);
             });
-            
+    
             function getTimeDifference(date) {
                 const now = new Date();
                 const diffInSeconds = Math.floor((now - date) / 1000);
-                
+    
                 if (diffInSeconds < 60) return 'Just now';
-                if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds/60)} mins ago`;
-                if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds/3600)} hours ago`;
-                if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds/86400)} days ago`;
+                if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} mins ago`;
+                if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+                if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
                 return date.toLocaleDateString();
             }
+    
+            const rangeInput = document.getElementById('dayRange');
+            renderActivityChart(parseInt(rangeInput.value));
+            rangeInput.addEventListener('change', () => {
+                renderActivityChart(parseInt(rangeInput.value));
+            });
         });
     </script>
+    
 </body>
 
 </html>
