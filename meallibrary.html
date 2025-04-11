@@ -142,7 +142,7 @@
 
     buttons.forEach(btn => {
       btn.addEventListener("click", () => {
-        buttons.forEach(b => b.classList.remove("bg-green-600", "text-white"));
+        buttons.forEach(b => b.classList.remove("bg-green-700", "text-white"));
         btn.classList.add("bg-green-700", "text-white");
         renderMeals(btn.dataset.filter);
       });

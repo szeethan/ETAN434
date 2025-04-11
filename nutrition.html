@@ -51,7 +51,15 @@
         </div>
 
         <div class="p-4 flex-1 flex flex-col">
-            <h2 class="text-lg font-semibold text-[#333333] mb-4">Meal Log</h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-[#333333]">Meal Log</h2>
+                <button 
+                class="bg-green-700 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-green-800"
+                onclick="window.location.href='allmeals.html'">
+                View More and Edit
+              </button>
+              
+              </div>
 
             <!-- Previously Logged Meals -->
             <div id="meal-log" class="flex flex-col space-y-4 mb-4">
@@ -77,11 +85,11 @@
 
             </div>
 
-            <button 
+            <!-- <button 
             class="bg-green-700 text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-green-700 mb-10 self-start"
             onclick="window.location.href='allmeals.html'">
             View More and Edit
-          </button>
+          </button> -->
 
             <!-- Chart Section -->
             <div class="grid grid-cols-2 gap-5 mb-2">
@@ -102,15 +110,17 @@
             </div>
 
             <div class="bg-gray-50 p-2 rounded-lg shadow-sm mb-4">
-                <h3 class="text-sm font-semibold text-green-800 mb-2">Healthy Meal Suggestion</h3>
-                <p class="text-sm text-gray-800 font-medium">🥣 Greek Yogurt Bowl</p>
-                <p class="text-xs text-gray-600 mb-1">300 kcal • 25g protein • 20g carbs • 8g fat</p>
-                <p class="text-xs text-gray-500 mb-3">Greek yogurt topped with granola and berries</p>
-                <button 
-                  class="bg-green-700 text-white text-xs px-3 py-1 rounded hover:bg-green-700"
+                <div class="flex justify-between items-center mb-1">
+                  <h3 class="text-sm font-semibold text-green-800">Healthy Meal Suggestion</h3>
+                  <button 
+                  class="bg-green-700 text-white text-sm px-3 py-2 rounded hover:bg-green-800"
                   onclick="window.location.href='meallibrary.html'">
-                  Browse More Meals →
+                  Browse →
                 </button>
+                </div>
+                <p class="text-sm text-gray-800 font-medium">🥣 Greek Yogurt Bowl</p>
+                <p class="text-xs text-gray-600 leading-snug">300 kcal • 25g protein • 20g carbs • 8g fat</p>
+                <p class="text-xs text-gray-500 leading-snug">Greek yogurt topped with granola and berries</p>
             </div>
 
             <!-- Enter Meal Button -->
