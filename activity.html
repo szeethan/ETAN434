@@ -42,6 +42,26 @@
         .animate-timer {
             animation: fillTimer 120s linear forwards;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+        }
     </style>
 </head>
 
@@ -92,9 +112,6 @@
                 </div>
             </div>
 
-
-            <!-- Activity Chart -->
-            <!-- Activity Chart -->
             <div class="bg-green-50 p-3 rounded-lg shadow-sm mb-4">
                 <div class="flex justify-between items-center mb-2">
                     <h3 class="text-sm font-semibold text-green-800">Activity Minutes</h3>
@@ -108,7 +125,6 @@
                 <canvas id="activityChart" height="50"></canvas>
             </div>
 
-
             <div>
                 <div class="bg-green-50 rounded-lg p-4 mt-2">
                 <h4 class="text-base font-semibold text-green-800">Daily Workout Suggestion</h4>
@@ -120,8 +136,6 @@
                 Enter Activity
             </button>
         </div>
-
-        
 
         <div class="flex justify-between items-center px-12 py-5 border-t border-gray-300">
             <a href="mobile.html" class="flex flex-col items-center text-gray-600 hover:text-green-700">
@@ -159,6 +173,19 @@
         </div>
     </div>
 
+    <div id="workoutModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-lg font-semibold"></h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
 
     <script>
         function getLastNDays(n) {
@@ -198,16 +225,11 @@
             const days = getLastNDays(daysToShow);
             const labels = days.map(d => d.label);
             const data = getActivityData(days, workouts);
-            console.log(data);
-            console.log(labels)
     
-
-           // Check if our custom chart instance exists and destroy it if it does.
             if (window.activityChartInstance && typeof window.activityChartInstance.destroy === 'function') {
                 window.activityChartInstance.destroy();
             }
 
-            // Create a new Chart instance and assign it to a differently-named global variable.
             window.activityChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -232,8 +254,47 @@
                 }
             });
         }
-    
-        document.addEventListener('DOMContentLoaded', function () {
+
+        function showWorkoutDetails(workout) {
+            const modal = document.getElementById('workoutModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            title.textContent = workout.name;
+            let html = `
+                <p class="text-sm text-gray-700 mb-2">Date: ${new Date(workout.timestamp).toLocaleDateString()}</p>
+                <p class="text-sm text-gray-700 mb-2">Duration: ${workout.duration} minutes</p>
+            `;
+            
+            if (workout.type === 'weights' && workout.exercises) {
+                html += `<div class="mt-4"><h4 class="font-medium mb-2">Exercises:</h4>`;
+                workout.exercises.forEach(ex => {
+                    html += `
+                        <div class="mb-3 p-2 bg-gray-50 rounded">
+                            <p class="font-medium">${ex.name}</p>
+                            <p class="text-sm">Weight: ${ex.weight} kg</p>
+                            <p class="text-sm">Sets: ${ex.sets} × Reps: ${ex.reps}</p>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else if (workout.type === 'cardio') {
+                html += `<p class="text-sm text-gray-700">Distance: ${workout.distance_km} km (${workout.distance_miles} miles)</p>`;
+            }
+            
+            if (workout.notes) {
+                html += `<div class="mt-4"><h4 class="font-medium mb-1">Notes:</h4><p class="text-sm">${workout.notes}</p></div>`;
+            }
+            
+            content.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('workoutModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
             const workouts = JSON.parse(localStorage.getItem('workouts') || "[]");
             workouts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     
@@ -243,20 +304,21 @@
             horizontalContainer.innerHTML = '';
             recentContainer.innerHTML = '';
     
-            workouts.slice(0, 5).forEach(workout => {
+            workouts.slice(0, 5).forEach((workout) => {
                 const workoutCard = document.createElement('div');
-                workoutCard.className = 'min-w-[180px] bg-[#FFF8E1] rounded-lg p-3';
+                workoutCard.className = 'min-w-[180px] bg-[#FFF8E1] rounded-lg p-3 cursor-pointer';
                 workoutCard.innerHTML = `
                     <h3 class="font-semibold text-[#333333]">${workout.name}</h3>
                     <p class="text-sm text-[#777777]">${workout.duration} mins</p>
                     <span class="text-xs bg-green-700 text-white px-2 py-1 rounded mt-2 inline-block">Completed</span>
                 `;
+                workoutCard.onclick = () => showWorkoutDetails(workout);
                 horizontalContainer.appendChild(workoutCard);
             });
     
             workouts.slice(0, 3).forEach(workout => {
                 const recentItem = document.createElement('div');
-                recentItem.className = 'flex justify-between items-center p-2 bg-[#F8F8F8] rounded';
+                recentItem.className = 'flex justify-between items-center p-2 bg-[#F8F8F8] rounded cursor-pointer';
     
                 const workoutDate = new Date(workout.timestamp);
                 const timeDiff = getTimeDifference(workoutDate);
@@ -268,6 +330,7 @@
                     </div>
                     <span class="text-xs text-[#777777]">${timeDiff}</span>
                 `;
+                recentItem.onclick = () => showWorkoutDetails(workout);
                 recentContainer.appendChild(recentItem);
             });
     
@@ -289,7 +352,5 @@
             });
         });
     </script>
-    
 </body>
-
 </html>
