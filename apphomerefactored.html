@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harmony+ Home</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .card-container {
+      width: 640px;
+      height: 960px;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    header, footer {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #047857;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 0.25rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .section {
+      margin-bottom: 1.25rem;
+    }
+
+    .card {
+      background: #fef3c7;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-container {
+      background: #e5e7eb;
+      height: 1rem;
+      border-radius: 9999px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #16a34a;
+      border-radius: 9999px;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: white;
+      line-height: 1rem;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      flex: 1;
+      background: #047857;
+      color: white;
+      padding: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #065f46;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 1px solid #e5e7eb;
+      padding: 0.5rem 1rem;
+    }
+
+    .nav-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #6b7280;
+      text-decoration: none;
+    }
+
+    .nav-button:hover {
+      color: #047857;
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-container">
+    <header>
+      <h1>Harmony+</h1>
+      <svg class="nav-icon" fill="none" stroke="gray" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A8.966 8.966 0 0112 15c2.285 0 4.355.876 5.879 2.304M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </header>
+
+    <main>
+      <div class="section">
+        <h2>Hey Evan, good morning!</h2>
+        <p style="font-size: 0.875rem; color: #6b7280;">Your daily run down</p>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between;">
+            <h3>Activity</h3>
+            <p style="font-size: 0.875rem; color: #6b7280;">60 / 90 mins</p>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 67%;"></div>
+            <div class="progress-text">67%</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; justify-content: space-between;">
+            <h3>Nutrition</h3>
+            <p style="font-size: 0.875rem; color: #6b7280;">1800 / 2200 kcal</p>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 82%;"></div>
+            <div class="progress-text">82%</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; justify-content: space-between;">
+            <h3>Sleep</h3>
+            <p style="font-size: 0.875rem; color: #6b7280;">8 / 8 hrs</p>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 100%;"></div>
+            <div class="progress-text">100%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin-bottom: 0.5rem;">Today's Suggestions</h3>
+        <div class="card">
+          <p style="font-size: 0.875rem;">Remember: hydration is key to a vibrant day!</p>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="btn">Log Activity</button>
+        <button class="btn">Log Meal</button>
+      </div>
+    </main>
+
+    <footer class="bottom-nav">
+      <a href="index.html" class="nav-button">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75l7.5-6 7.5 6v9.75a1.5 1.5 0 01-1.5 1.5h-3.75a.75.75 0 01-.75-.75v-4.5H9.75v4.5a.75.75 0 01-.75.75H5.25a1.5 1.5 0 01-1.5-1.5V9.75z" />
+        </svg>
+        Home
+      </a>
+
+      <a href="activity.html" class="nav-button">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        Activity
+      </a>
+
+      <a href="nutrition.html" class="nav-button">
+        <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19.56 13.91c-.04-3.34 2.74-4.93 2.86-5.01-1.57-2.29-4-2.61-4.87-2.65-2.08-.21-4.06 1.22-5.11 1.22-1.05 0-2.7-1.19-4.45-1.16-2.28.03-4.4 1.33-5.57 3.37-2.38 4.12-.6 10.22 1.71 13.57 1.14 1.66 2.49 3.51 4.26 3.45 1.7-.07 2.34-1.1 4.39-1.1 2.04 0 2.6 1.1 4.38 1.07 1.82-.03 2.96-1.69 4.06-3.37 1.3-1.89 1.83-3.74 1.85-3.83-.04-.02-3.53-1.35-3.57-5.56zM15.31 4.01c.89-1.08 1.49-2.6 1.33-4.1-1.28.05-2.82.85-3.73 1.93-.82.96-1.54 2.5-1.35 3.98 1.43.11 2.86-.73 3.75-1.81z"/>
+        </svg>
+        Nutrition
+      </a>
+
+      <a href="wellness.html" class="nav-button">
+        <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z"/>
+        </svg>
+        Wellness
+      </a>
+    </footer>
+  </div>
+</body>
+</html>
