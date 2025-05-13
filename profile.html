@@ -1,174 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>User Setting</title>
-    <link href="./assets/mobileprofile.css" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <link href="./tailwind.css" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 400;
+      src: url('./montserrat-v29-latin/montserrat-v29-latin-regular.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 600;
+      src: url('./montserrat-v29-latin/montserrat-v29-latin-600.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 700;
+      src: url('./montserrat-v29-latin/montserrat-v29-latin-700.woff2') format('woff2');
+    }
+    body {
+      font-family: "Montserrat", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+    <div class="flex items-center justify-between px-8 py-6 border-b border-gray-300">
+      <a href="mobile.html" class="text-green-700 hover:text-green-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </a>
+      <h1 class="text-xl font-bold text-green-700">User Profile</h1>
+      <div class="w-6"></div>
+    </div>
 
-    <style>
-      @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 400;
-        src: url('./montserrat-v29-latin/montserrat-v29-latin-regular.woff2') format('woff2');
-      }
-      @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 600;
-        src: url('./montserrat-v29-latin/montserrat-v29-latin-600.woff2') format('woff2');
-      }
-      @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 700;
-        src: url('./montserrat-v29-latin/montserrat-v29-latin-700.woff2') format('woff2');
-      }
-      body {
-        font-family: 'Montserrat', sans-serif;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <div class="w-[640px] h-[960px] bg-white rounded-xl shadow-md p-6">
-      <h1 class="text-2xl font-bold text-green-700 mb-4">User Settings</h1>
-
-      <div class="flex items-center justify-center gap-4 mb-6">
-        <span class="text-sm font-medium text-gray-700">Metric (kg, cm)</span>
-        <div class="relative w-14 h-8 bg-gray-200 rounded-full cursor-pointer" id="unitToggle">
-          <div class="absolute w-6 h-6 bg-green-700 rounded-full transition-all duration-300 top-1" id="toggleIndicator"></div>
+    <div class="flex-1 flex flex-col justify-between p-6">
+      <div class="space-y-4">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+          <span class="text-sm font-medium text-gray-700">Metric (kg, cm)</span>
+          <div class="relative w-14 h-8 bg-gray-200 rounded-full cursor-pointer" id="unitToggle">
+            <div class="absolute w-6 h-6 bg-green-700 rounded-full transition-all duration-300 top-1" id="toggleIndicator"></div>
+          </div>
+          <span class="text-sm font-medium text-gray-700">Imperial (lb, in)</span>
         </div>
-        <span class="text-sm font-medium text-gray-700">Imperial (lb, in)</span>
+
+        <form id="profileForm" class="space-y-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+            <input type="number" id="age" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Height</label>
+            <input type="number" id="height" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600" placeholder="cm">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Weight</label>
+            <input type="number" id="weight" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600" placeholder="kg">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="flex items-center space-x-1">
+                <input type="radio" name="gender" value="male" class="h-4 w-4 text-green-600">
+                <span class="text-sm">Male</span>
+              </label>
+              <label class="flex items-center space-x-1">
+                <input type="radio" name="gender" value="female" class="h-4 w-4 text-green-600">
+                <span class="text-sm">Female</span>
+              </label>
+              <label class="flex items-center space-x-1">
+                <input type="radio" name="gender" value="other" class="h-4 w-4 text-green-600">
+                <span class="text-sm">Other</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Goals</label>
+            <textarea id="goals" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600" placeholder="Your fitness goals..."></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Fitness Interests</label>
+            <div class="flex flex-wrap gap-2 mb-2" id="interestsBox"></div>
+            <div class="flex gap-2">
+              <input type="text" id="interestInput" placeholder="Add new interest" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm">
+              <button type="button" onclick="addTag()" class="px-3 py-2 bg-green-700 text-white rounded-lg text-sm hover:bg-green-800">Add</button>
+            </div>
+          </div>
+        </form>
       </div>
 
-      <form id="profileForm" class="space-y-4">
-        <div>
-          <label for="age" class="block text-gray-700 font-medium mb-1">Age</label>
-          <input type="number" id="age" name="age" class="w-full border border-gray-300 rounded-md p-2" required />
+      <div class="pt-2">
+        <button type="submit" form="profileForm" class="w-full bg-green-700 text-white py-2.5 rounded-lg font-medium hover:bg-green-700">
+          Save Profile
+        </button>
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+          <h3 class="text-sm font-semibold text-blue-800 mb-3">Share Your Progress 🎉</h3>
+          <button onclick="share()" class="w-full bg-blue-700 text-white py-2 rounded-lg text-sm hover:bg-blue-800">
+            Celebrating is better with friends!
+          </button>
         </div>
-
-        <div>
-          <label for="height" class="block text-gray-700 font-medium mb-1">Height</label>
-          <input type="number" id="height" name="height" class="w-full border border-gray-300 rounded-md p-2" required placeholder="Height (cm)" />
-        </div>
-
-        <div>
-          <label for="weight" class="block text-gray-700 font-medium mb-1">Weight</label>
-          <input type="number" id="weight" name="weight" class="w-full border border-gray-300 rounded-md p-2" required placeholder="Weight (kg)" />
-        </div>
-
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Gender</label>
-          <div class="flex items-center space-x-4">
-            <label class="flex items-center">
-              <input type="radio" name="gender" value="male" class="mr-2" required />
-              <span>Male</span>
-            </label>
-            <label class="flex items-center">
-              <input type="radio" name="gender" value="female" class="mr-2" required />
-              <span>Female</span>
-            </label>
-            <label class="flex items-center">
-              <input type="radio" name="gender" value="other" class="mr-2" required />
-              <span>Other</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mt-4">
-          <label for="goals" class="block text-gray-700 font-medium mb-1">Goals (e.g., BMI target, fitness type)</label>
-          <textarea id="goals" name="goals" rows="3" class="w-full border border-gray-300 rounded-md p-2" placeholder="Example: 'Maintain a BMI of ~22, bench 225.'" required></textarea>
-        </div>
-
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Fitness Interests</label>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">🏋️ Weight Lifting</span>
-            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">🏃 Running</span>
-            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">🧘 Yoga</span>
-            <button type="button" class="text-gray-500 hover:text-green-700">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div class="py-4">
-          <button type="submit" class="w-full bg-green-700 text-white rounded-md py-2 font-medium hover:bg-green-800">Save Profile</button>
-        </div>
-      </form>
-
-      <div class="py-4">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">Share Your Progress</h2>
-        <p class="text-gray-600 text-sm mb-2">Share your progress with friends or family and celebrate wins together! 🎉</p>
-        <button id="shareButton" class="w-full bg-blue-600 text-white rounded-md py-2 font-medium hover:bg-blue-700">Share 🔗</button>
-      </div>
-
-      <div class="mt-4 text-center">
-        <a href="mobile.html" class="text-green-700 hover:underline font-medium">Back to Home</a>
       </div>
     </div>
 
-    <script>
-      const STORAGE_KEY = 'userProfile';
-      let currentUnit = 'metric';
+    <div class="p-6 mt-1 border-t border-gray-300">
+      <button onclick="window.location.href='mobile.html'" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300">
+        Back to Home
+      </button>
+    </div>
+  </div>
 
-      const unitToggle = document.getElementById('unitToggle');
-      const toggleIndicator = document.getElementById('toggleIndicator');
-      const heightInput = document.getElementById('height');
-      const weightInput = document.getElementById('weight');
+  <script>
+    const KEY = 'userProfile';
+    let unit = 'metric';
 
-      function setUnit(unit) {
-        currentUnit = unit;
-        if (unit === 'metric') {
-          toggleIndicator.style.transform = 'translateX(14%)';
-          heightInput.placeholder = 'Height (cm)';
-          weightInput.placeholder = 'Weight (kg)';
-        } else {
-          toggleIndicator.style.transform = 'translateX(119%)';
-          heightInput.placeholder = 'Height (in)';
-          weightInput.placeholder = 'Weight (lb)';
-        }
-      }
-
-      unitToggle.addEventListener('click', () => {
-        setUnit(currentUnit === 'metric' ? 'imperial' : 'metric');
+    function renderTags() {
+      const data = JSON.parse(localStorage.getItem(KEY)) || { interests: [] };
+      const box = document.getElementById('interestsBox');
+      box.innerHTML = '';
+      data.interests.forEach(tag => {
+        box.innerHTML += `<span class="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-sm">${tag}</span>`;
       });
+    }
 
-      document.getElementById('profileForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const profileData = {
-          units: currentUnit,
-          age: document.getElementById('age').value,
-          height: heightInput.value,
-          weight: weightInput.value,
-          gender: document.querySelector('input[name="gender"]:checked').value,
-          goals: document.getElementById('goals').value
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(profileData));
-        alert('Profile saved successfully!');
-      });
+    function addTag() {
+      const input = document.getElementById('interestInput');
+      const tag = input.value.trim();
+      if (!tag) return;
+      const data = JSON.parse(localStorage.getItem(KEY)) || { interests: [] };
+      data.interests = [...new Set([...data.interests, tag])];
+      localStorage.setItem(KEY, JSON.stringify(data));
+      input.value = '';
+      renderTags();
+    }
 
-      function loadProfile() {
-        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-        if (!data) { setUnit('metric'); return; }
+    function toggleUnit(u) {
+      unit = u;
+      const h = document.getElementById('height');
+      const w = document.getElementById('weight');
+      document.getElementById('toggleIndicator').style.transform = u === 'metric' ? 'translateX(4px)' : 'translateX(28px)';
+      h.placeholder = u === 'metric' ? 'cm' : 'in';
+      w.placeholder = u === 'metric' ? 'kg' : 'lb';
+    }
 
-        setUnit(data.units || 'metric');
-        if (data.age) document.getElementById('age').value = data.age;
-        if (data.height) heightInput.value = data.height;
-        if (data.weight) weightInput.value = data.weight;
-        if (data.gender) {
-          const genderRadio = document.querySelector(`input[name="gender"][value="${data.gender}"]`);
-          if (genderRadio) genderRadio.checked = true;
-        }
-        if (data.goals) document.getElementById('goals').value = data.goals;
-      }
+    function save() {
+      const data = {
+        units: unit,
+        age: document.getElementById('age').value,
+        height: document.getElementById('height').value,
+        weight: document.getElementById('weight').value,
+        gender: document.querySelector('input[name="gender"]:checked')?.value || '',
+        goals: document.getElementById('goals').value,
+        interests: JSON.parse(localStorage.getItem(KEY))?.interests || []
+      };
+      localStorage.setItem(KEY, JSON.stringify(data));
+      alert('Profile saved!');
+    }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        loadProfile();
-      });
-    </script>
-  </body>
+    function load() {
+      const data = JSON.parse(localStorage.getItem(KEY));
+      if (!data) return;
+      document.getElementById('age').value = data.age || '';
+      document.getElementById('height').value = data.height || '';
+      document.getElementById('weight').value = data.weight || '';
+      document.getElementById('goals').value = data.goals || '';
+      if (data.gender) document.querySelector(`input[value="${data.gender}"]`).checked = true;
+      toggleUnit(data.units || 'metric');
+      renderTags();
+    }
+
+    function share() {
+      const data = JSON.parse(localStorage.getItem(KEY));
+      if (!data) return alert('Save your profile first!');
+      navigator.clipboard.writeText(window.location.href);
+      alert('Profile link copied!');
+    }
+
+    document.addEventListener('DOMContentLoaded', load);
+    document.getElementById('profileForm').addEventListener('submit', e => {
+      e.preventDefault();
+      save();
+    });
+    document.getElementById('unitToggle').addEventListener('click', () => {
+      toggleUnit(unit === 'metric' ? 'imperial' : 'metric');
+    });
+  </script>
+</body>
 </html>
